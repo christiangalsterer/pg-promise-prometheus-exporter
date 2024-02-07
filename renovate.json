@@ -24,7 +24,10 @@
             ],
             "prConcurrentLimit": 1,
             "automerge": true,
-            "automergeType": "branch"
+            "automergeType": "branch",
+            "automergeSchedule": [
+                "on sunday"
+            ]
         }
     ]
 }
