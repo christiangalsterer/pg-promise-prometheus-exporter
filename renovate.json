@@ -2,7 +2,8 @@
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
         "config:js-lib",
-        "schedule:daily"
+        "schedule:daily",
+        "schedule:automergeEarlyMondays"
     ],
     "addLabels": [
         "renovate"
@@ -24,10 +25,7 @@
             ],
             "prConcurrentLimit": 1,
             "automerge": true,
-            "automergeType": "branch",
-            "automergeSchedule": [
-                "on sunday"
-            ]
+            "automergeType": "branch"
         }
     ]
 }
