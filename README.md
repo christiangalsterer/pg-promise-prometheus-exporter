@@ -195,8 +195,8 @@ const db: any = pgp(connection) // the connection parameter is either a configur
 const register = new Registry();
 collectDefaultMetrics({ register })
 
-// monitor the pg.Client
-monitorPgPromise(db, initOptions, client, register)
+// monitor pg-promise
+monitorPgPromise(db, initOptions, register)
 
 ...
 
@@ -212,7 +212,7 @@ const promClient = require( 'prom-client');
 const pgPromiseExporter = require('@christiangalsterer/pg-promise-prometheus-exporter')
 
 // set up pg-promise
-const initOptions = {/* options as documented below */};
+const initOptions = {/* initialization options */};
 const pgp = require('pg-promise')(initOptions);
 const db = pgp(connection) // the connection parameter is either a configuration object or a connection string
 
@@ -222,8 +222,8 @@ const Registry = promClient.Registry;
 const register = new Registry();
 collectDefaultMetrics({ register });
 
-// monitor the pg-promise
-pgPromiseExporter.monitorPgPromise(db, initOptions, client, register)
+// monitor pg-promise
+pgPromiseExporter.monitorPgPromise(db, initOptions, register)
 
 // connect to Postgres *after* calling monitorPgPromise
 ```
