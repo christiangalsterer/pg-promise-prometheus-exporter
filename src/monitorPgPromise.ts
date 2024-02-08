@@ -7,7 +7,7 @@ import { type IDatabase } from 'pg-promise'
 /**
  * Exposes metrics for pg-promise in prometheus format.
  *
- * @param db The db used
+ * @param db The database object created from pg-promise
  * @param pgPromiseInitOptions The init options used for pg-promise
  * @param options Optional parameter to configure the exporter
  */
