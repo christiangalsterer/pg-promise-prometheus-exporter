@@ -55,7 +55,6 @@ export class PgPromisePrometheusExporter {
   }
 
   public enableMetrics (): void {
-    // FIXME: add options parameters
     const pgPoolExporterOptions: PgPoolExporterOptions = { defaultLabels: this.options.defaultLabels }
     monitorPgPool(this.db.$pool, this.register, pgPoolExporterOptions)
 
