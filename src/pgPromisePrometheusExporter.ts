@@ -84,8 +84,12 @@ export class PgPromisePrometheusExporter {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onReceive (event: { data: any[], result: IResultExt | undefined, ctx: IEventContext }): void {
-    if (event.result !== undefined) {
-      this.commands.observe(mergeLabelsWithStandardLabels({ host: event.ctx.client.host + ':' + event.ctx.client.port, database: event.ctx.client.database, command: event.result.command, status: this.getStatus(event.ctx.ctx.success) }, this.options.defaultLabels), event.result.duration! / 1000)
+    try {
+      if (event.result !== undefined) {
+        this.commands.observe(mergeLabelsWithStandardLabels({ host: event.ctx.client.host + ':' + event.ctx.client.port, database: event.ctx.client.database, command: event.result.command, status: this.getStatus(event.ctx.ctx.success) }, this.options.defaultLabels), event.result.duration! / 1000)
+      }
+    } catch (error) {
+      console.error('An error occured in the reveive event handling', error)
     }
   }
 
