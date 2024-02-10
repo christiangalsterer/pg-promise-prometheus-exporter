@@ -95,9 +95,13 @@ export class PgPromisePrometheusExporter {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onTask (eventCtx: IEventContext): void {
-    if (eventCtx.ctx.finish != null) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      this.tasks.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port, database: eventCtx.client.database, task: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
+    try {
+      if (eventCtx.ctx.finish != null) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        this.tasks.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port, database: eventCtx.client.database, task: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
+      }
+    } catch (error) {
+      console.error('An error occured in the task event handling', error)
     }
   }
 
