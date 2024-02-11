@@ -138,9 +138,13 @@ export class PgPromisePrometheusExporter {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onTransaction (eventCtx: IEventContext): void {
-    if (eventCtx.ctx.finish != null) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      this.transactions.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port, database: eventCtx.client.database, transaction: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
+    try {
+      if (eventCtx.ctx.finish != null) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        this.transactions.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port, database: eventCtx.client.database, transaction: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
+      }
+    } catch (error) {
+      console.error('An error occured in the transaction event handling', error)
     }
   }
 
