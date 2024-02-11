@@ -6,7 +6,7 @@ import { monitorPgPool } from '@christiangalsterer/node-postgres-prometheus-expo
 import { type PgPoolExporterOptions } from '@christiangalsterer/node-postgres-prometheus-exporter/dist/pgPoolExporterOptions'
 
 /**
- * Exports metrics for the pg-promise
+ * Exports metrics for pg-promise
  */
 export class PgPromisePrometheusExporter {
   private readonly db: IDatabase<unknown>
@@ -23,11 +23,23 @@ export class PgPromisePrometheusExporter {
   private readonly tasks: Histogram
   private readonly transactions: Histogram
 
+  private readonly originalHandlers: {
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type, @typescript-eslint/no-explicit-any
+    receive: { func: (event: { data: any[], result: void | IResultExt, ctx: IEventContext }) => void } | undefined
+    task: { func: ((eventCtx: IEventContext) => void) } | undefined
+    transact: { func: ((eventCtx: IEventContext) => void) } | undefined
+  }
+
   constructor (db: IDatabase<unknown>, pgPromiseInitOptions: IInitOptions, register: Registry, options?: PgPromiseExporterOptions) {
     this.db = db
     this.pgPromiseInitOptions = pgPromiseInitOptions
     this.register = register
     this.options = { ...this.defaultOptions, ...options }
+    this.originalHandlers = {
+      receive: undefined,
+      task: undefined,
+      transact: undefined
+    }
 
     this.commands = new Histogram({
       name: 'pg_commands_seconds',
@@ -58,32 +70,51 @@ export class PgPromisePrometheusExporter {
     const pgPoolExporterOptions: PgPoolExporterOptions = { defaultLabels: this.options.defaultLabels }
     monitorPgPool(this.db.$pool, this.register, pgPoolExporterOptions)
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    // this.pgPromiseInitOptions.connect = this.onConnect.bind(this)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    // this.pgPromiseInitOptions.disconnect = this.onDisconnect.bind(this)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
-    this.pgPromiseInitOptions.receive = this.onReceive.bind(this)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
-    this.pgPromiseInitOptions.task = this.onTask.bind(this)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
-    this.pgPromiseInitOptions.transact = this.onTransaction.bind(this)
+    this.originalHandlers.receive = {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      func: this.pgPromiseInitOptions.receive?.bind(this)
+    }
+    if (typeof this.pgPromiseInitOptions.receive === 'function') {
+      this.pgPromiseInitOptions.receive = (e) => {
+        this.onReceive(e)
+        this.originalHandlers.receive?.func(e)
+      }
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      this.pgPromiseInitOptions.receive = this.onReceive.bind(this)
+    }
+
+    this.originalHandlers.task = {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      func: this.pgPromiseInitOptions.task?.bind(this)
+    }
+    if (typeof this.pgPromiseInitOptions.task === 'function') {
+      this.pgPromiseInitOptions.task = (e) => {
+        this.onTask(e)
+        this.originalHandlers.task?.func(e)
+      }
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      this.pgPromiseInitOptions.task = this.onTask.bind(this)
+    }
+
+    this.originalHandlers.transact = {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      func: this.pgPromiseInitOptions.transact?.bind(this)
+    }
+    if (typeof this.pgPromiseInitOptions.transact === 'function') {
+      this.pgPromiseInitOptions.transact = (e) => {
+        this.onTransaction(e)
+        this.originalHandlers.transact?.func(e)
+      }
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      this.pgPromiseInitOptions.transact = this.onTransaction.bind(this)
+    }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // onConnect (event: { client: IClient, dc: any, useCount: number }): void {
-  //   if (isDirectClient(event.client)) {
-  //     this.poolConnectionsCreatedTotal.inc(mergeLabelsWithStandardLabels({ host: event.client.host + ':' + event.client.port, database: event.client.database }, this.options.defaultLabels))
-  //   }
-  // }
-
-  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // onDisconnect (event: { client: IClient, dc: any }): void {
-  //   this.poolActiveConnections.dec(mergeLabelsWithStandardLabels({ host: event.client.host + ':' + event.client.port, database: event.client.database }, this.options.defaultLabels))
-  // }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onReceive (event: { data: any[], result: IResultExt | undefined, ctx: IEventContext }): void {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-invalid-void-type
+  onReceive (event: { data: any[], result: void | IResultExt, ctx: IEventContext }): void {
     try {
       if (event.result !== undefined) {
         this.commands.observe(mergeLabelsWithStandardLabels({ host: event.ctx.client.host + ':' + event.ctx.client.port, database: event.ctx.client.database, command: event.result.command, status: this.getStatus(event.ctx.ctx.success) }, this.options.defaultLabels), event.result.duration! / 1000)
