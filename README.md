@@ -239,6 +239,11 @@ _PgPromiseExporterOptions_.
 |---|---|---|---|
 | defaultLabels | Default labels added to each metrics. | {'foo':'bar', 'alice': 3} | 1.0.0 |
 
+# Event Handling
+
+If there are already event handler registered for the events provided by pg-promise, the library will preserve the defined event handlers when the initOptions are initialized.
+
+
 # Grafana Dashboard
 
 An example dashboard for Grafana is available [here](/docs/grafana/dashboard.json) displaying the provided metrics by the exporter.
