@@ -43,7 +43,7 @@ describe('tests PgPoolPrometheusExporter', () => {
     expect(register.getMetricsAsArray().length).toBe(3)
   })
 
-  test('tests if event handlers are registered with no previous handlers', () => {
+  test('tests if event handlers are registered without previous handlers', () => {
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     exporter.enableMetrics()
     expect(initOptionsWithoutHandlers.receive).toBeDefined()
