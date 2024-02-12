@@ -12,7 +12,9 @@ describe('tests PgPoolPrometheusExporter', () => {
   let register: Registry
   const initOptionsEmpty: IInitOptions = {}
   const initOptionsWithHandlers: IInitOptions = {
-    receive: console.log
+    receive: console.log,
+    task: console.log,
+    transact: console.log
   }
 
   const pgp: IMain = pgPromise(initOptionsEmpty)
@@ -60,10 +62,15 @@ describe('tests PgPoolPrometheusExporter', () => {
     exporter.enableMetrics()
     expect(initOptionsWithHandlers.receive).toBeDefined()
     expect(initOptionsWithHandlers.receive).toBeInstanceOf(Function)
-    expect(initOptionsWithHandlers.task).toBeDefined()
+    expect(initOptionsWithHandlers.receive?.name).toBeDefined()
+    expect(initOptionsWithHandlers.receive?.name).not.toStrictEqual('bound onReceive')
     expect(initOptionsWithHandlers.task).toBeInstanceOf(Function)
+    expect(initOptionsWithHandlers.task?.name).toBeDefined()
+    expect(initOptionsWithHandlers.task?.name).not.toStrictEqual('bound onTask')
     expect(initOptionsWithHandlers.transact).toBeDefined()
     expect(initOptionsWithHandlers.transact).toBeInstanceOf(Function)
+    expect(initOptionsWithHandlers.transact?.name).toBeDefined()
+    expect(initOptionsWithHandlers.transact?.name).not.toStrictEqual('bound onTransaction')
   })
 
   test('tests if monitorPgPool is called with default parameter', () => {
