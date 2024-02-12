@@ -1,8 +1,12 @@
 import { beforeEach, describe, expect, test } from '@jest/globals'
 import { Registry } from 'prom-client'
-import pgPromise, { type IMain, type IInitOptions, type IDatabase } from 'pg-promise'
-
+import pgPromise, { type IMain, type IInitOptions, type IDatabase, as } from 'pg-promise'
 import { PgPromisePrometheusExporter } from '../src/pgPromisePrometheusExporter'
+import { monitorPgPool } from '@christiangalsterer/node-postgres-prometheus-exporter'
+
+jest.mock('@christiangalsterer/node-postgres-prometheus-exporter', () => ({
+  monitorPgPool: jest.fn()
+}))
 
 describe('tests PgPoolPrometheusExporter', () => {
   let register: Registry
@@ -40,26 +44,40 @@ describe('tests PgPoolPrometheusExporter', () => {
   test('tests if event handlers are registered with no previous handlers', () => {
     const exporter = new PgPromisePrometheusExporter(db, initOptionsEmpty, register)
     exporter.enableMetrics()
-    console.log(initOptionsEmpty.receive?.name)
-    expect(initOptionsEmpty.receive !== undefined).toBeTruthy()
-    expect(typeof initOptionsEmpty.receive === 'function').toBeTruthy()
+    expect(initOptionsEmpty.receive).toBeDefined()
+    expect(initOptionsEmpty.receive).toBeInstanceOf(Function)
     expect(initOptionsEmpty.receive?.name).toStrictEqual('bound onReceive')
-    expect(initOptionsEmpty.task !== undefined).toBeTruthy()
-    expect(typeof initOptionsEmpty.task === 'function').toBeTruthy()
+    expect(initOptionsEmpty.task).toBeDefined()
+    expect(initOptionsEmpty.task).toBeInstanceOf(Function)
     expect(initOptionsEmpty.task?.name).toStrictEqual('bound onTask')
-    expect(initOptionsEmpty.transact !== undefined).toBeTruthy()
-    expect(typeof initOptionsEmpty.transact === 'function').toBeTruthy()
+    expect(initOptionsEmpty.transact).toBeDefined()
+    expect(initOptionsEmpty.transact).toBeInstanceOf(Function)
     expect(initOptionsEmpty.transact?.name).toStrictEqual('bound onTransaction')
   })
 
   test('tests if event handlers are registered with previous handlers', () => {
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register)
     exporter.enableMetrics()
-    expect(initOptionsWithHandlers.receive !== undefined).toBeTruthy()
-    expect(typeof initOptionsWithHandlers.receive === 'function').toBeTruthy()
-    expect(initOptionsWithHandlers.task !== undefined).toBeTruthy()
-    expect(typeof initOptionsWithHandlers.task === 'function').toBeTruthy()
-    expect(initOptionsWithHandlers.transact !== undefined).toBeTruthy()
-    expect(typeof initOptionsWithHandlers.transact === 'function').toBeTruthy()
+    expect(initOptionsWithHandlers.receive).toBeDefined()
+    expect(initOptionsWithHandlers.receive).toBeInstanceOf(Function)
+    expect(initOptionsWithHandlers.task).toBeDefined()
+    expect(initOptionsWithHandlers.task).toBeInstanceOf(Function)
+    expect(initOptionsWithHandlers.transact).toBeDefined()
+    expect(initOptionsWithHandlers.transact).toBeInstanceOf(Function)
+  })
+
+  test('tests if monitorPgPool is called with default parameter', () => {
+    const monitorPgPoolMock = monitorPgPool as jest.Mock
+    const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register)
+    exporter.enableMetrics()
+    expect(monitorPgPoolMock).toHaveBeenCalledWith(db.$pool, register, { defaultLabels: undefined })
+  })
+
+  test('tests if monitorPgPool is called with optional parameter', () => {
+    const monitorPgPoolMock = monitorPgPool as jest.Mock
+    const options = { defaultLabels: { foo: 'bar', alice: 2 } }
+    const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register, options)
+    exporter.enableMetrics()
+    expect(monitorPgPoolMock).toHaveBeenCalledWith(db.$pool, register, { defaultLabels: { foo: 'bar', alice: 2 } })
   })
 })
