@@ -10,14 +10,14 @@ jest.mock('@christiangalsterer/node-postgres-prometheus-exporter', () => ({
 
 describe('tests PgPoolPrometheusExporter', () => {
   let register: Registry
-  const initOptionsEmpty: IInitOptions = {}
+  const initOptionsWithoutHandlers: IInitOptions = {}
   const initOptionsWithHandlers: IInitOptions = {
     receive: console.log,
     task: console.log,
     transact: console.log
   }
 
-  const pgp: IMain = pgPromise(initOptionsEmpty)
+  const pgp: IMain = pgPromise(initOptionsWithoutHandlers)
   const db: IDatabase<unknown> = pgp({})
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('tests PgPoolPrometheusExporter', () => {
 
   test('test if all metrics are registered in registry', () => {
     // eslint-disable-next-line no-new
-    new PgPromisePrometheusExporter(db, initOptionsEmpty, register)
+    new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     expect(register.getSingleMetric('pg_commands_seconds')).toBeDefined()
     expect(register.getSingleMetric('pg_tasks_seconds')).toBeDefined()
     expect(register.getSingleMetric('pg_transactions_seconds')).toBeDefined()
@@ -36,7 +36,7 @@ describe('tests PgPoolPrometheusExporter', () => {
   test('test if all metrics are registered in registry with defaultLabels', () => {
     const options = { defaultLabels: { foo: 'bar', alice: 2 } }
     // eslint-disable-next-line no-new
-    new PgPromisePrometheusExporter(db, initOptionsEmpty, register, options)
+    new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register, options)
     expect(register.getSingleMetric('pg_commands_seconds')).toBeDefined()
     expect(register.getSingleMetric('pg_tasks_seconds')).toBeDefined()
     expect(register.getSingleMetric('pg_transactions_seconds')).toBeDefined()
@@ -44,17 +44,17 @@ describe('tests PgPoolPrometheusExporter', () => {
   })
 
   test('tests if event handlers are registered with no previous handlers', () => {
-    const exporter = new PgPromisePrometheusExporter(db, initOptionsEmpty, register)
+    const exporter = new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     exporter.enableMetrics()
-    expect(initOptionsEmpty.receive).toBeDefined()
-    expect(initOptionsEmpty.receive).toBeInstanceOf(Function)
-    expect(initOptionsEmpty.receive?.name).toStrictEqual('bound onReceive')
-    expect(initOptionsEmpty.task).toBeDefined()
-    expect(initOptionsEmpty.task).toBeInstanceOf(Function)
-    expect(initOptionsEmpty.task?.name).toStrictEqual('bound onTask')
-    expect(initOptionsEmpty.transact).toBeDefined()
-    expect(initOptionsEmpty.transact).toBeInstanceOf(Function)
-    expect(initOptionsEmpty.transact?.name).toStrictEqual('bound onTransaction')
+    expect(initOptionsWithoutHandlers.receive).toBeDefined()
+    expect(initOptionsWithoutHandlers.receive).toBeInstanceOf(Function)
+    expect(initOptionsWithoutHandlers.receive?.name).toStrictEqual('bound onReceive')
+    expect(initOptionsWithoutHandlers.task).toBeDefined()
+    expect(initOptionsWithoutHandlers.task).toBeInstanceOf(Function)
+    expect(initOptionsWithoutHandlers.task?.name).toStrictEqual('bound onTask')
+    expect(initOptionsWithoutHandlers.transact).toBeDefined()
+    expect(initOptionsWithoutHandlers.transact).toBeInstanceOf(Function)
+    expect(initOptionsWithoutHandlers.transact?.name).toStrictEqual('bound onTransaction')
   })
 
   test('tests if event handlers are registered with previous handlers', () => {
