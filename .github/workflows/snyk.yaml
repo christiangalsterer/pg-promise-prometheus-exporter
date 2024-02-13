@@ -1,9 +1,6 @@
 name: Snyk
 
 on:
-  # push:
-  #   branches:
-  #     - 'disabled_synk'
   push:
     branches: 
       - 'main'
