@@ -8,6 +8,7 @@ on:
     branches: 
       - 'main'
       - 'renovate/**'
+      - 'disabled_synk'
     paths-ignore:
       - '**.md'
   pull_request:
