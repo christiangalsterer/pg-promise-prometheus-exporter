@@ -60,7 +60,7 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - name: Snyk monitor 
-        run: snyk monitor --file=package.json --org=christiangalsterer --project-name='christiangalsterer/pg-promise-prometheus-exporter:package.json' --project-environment=backend --project-lifecycle=production 
+        run: npm install && snyk monitor --file=package.json --org=christiangalsterer --project-name='christiangalsterer/pg-promise-prometheus-exporter:package.json' --project-environment=backend --project-lifecycle=production 
         env:
            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - name: Run Snyk to check for vulnerabilities
