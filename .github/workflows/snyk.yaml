@@ -1,18 +1,18 @@
 name: Snyk
 
 on:
-  push:
-    branches:
-      - 'disabled_synk'
   # push:
-  #   branches: 
-  #     - 'main'
-  #     - 'renovate/**'
-  #   paths-ignore:
-  #     - '**.md'
-  # pull_request:
   #   branches:
-  #     - 'main'
+  #     - 'disabled_synk'
+  push:
+    branches: 
+      - 'main'
+      - 'renovate/**'
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    branches:
+      - 'main'
 
 permissions:
   contents: read
@@ -73,7 +73,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --org=christiangalsterer --sarif-file-output=snyk.sarif 
+          args: https://github.com/christiangalsterer/pg-promise-prometheus-exporter --org=christiangalsterer --sarif-file-output=snyk.sarif
       - name: Upload test result to GitHub Code Scanning
         if: ${{ steps.changed-files.outputs.deps_any_changed == 'true' }}
         uses: github/codeql-action/upload-sarif@v3
