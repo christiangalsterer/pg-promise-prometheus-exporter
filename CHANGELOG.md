@@ -11,6 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release with support for connection pool, command, task and transaction metrics
 
-## [1.1.0] 2024-02-13
+## [1.1.0] 2024-02-14
 
 ### Added support to preserve existing event handlers. If an event handler is already registered it will be called as well.
