@@ -13,4 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] 2024-02-14
 
+The detailed changelog can be found [here](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v1.0.0...v1.1.0).
+
 ### Added support to preserve existing event handlers. If an event handler is already registered it will be called as well.
