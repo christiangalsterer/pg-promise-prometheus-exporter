@@ -25,22 +25,28 @@ describe('tests PgPoolPrometheusExporter', () => {
   })
 
   test('test if all metrics are registered in registry', () => {
+    const metrics: string[] = [
+      'pg_commands_seconds', 'pg_tasks_seconds', 'pg_transactions_seconds'
+    ]
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
-    expect(register.getSingleMetric('pg_commands_seconds')).toBeDefined()
-    expect(register.getSingleMetric('pg_tasks_seconds')).toBeDefined()
-    expect(register.getSingleMetric('pg_transactions_seconds')).toBeDefined()
-    expect(register.getMetricsAsArray().length).toBe(3)
+    expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
+    metrics.forEach(metric => {
+      expect(register.getSingleMetric(metric)).toBeDefined()
+    })
   })
 
   test('test if all metrics are registered in registry with defaultLabels', () => {
+    const metrics: string[] = [
+      'pg_commands_seconds', 'pg_tasks_seconds', 'pg_transactions_seconds'
+    ]
     const options = { defaultLabels: { foo: 'bar', alice: 2 } }
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register, options)
-    expect(register.getSingleMetric('pg_commands_seconds')).toBeDefined()
-    expect(register.getSingleMetric('pg_tasks_seconds')).toBeDefined()
-    expect(register.getSingleMetric('pg_transactions_seconds')).toBeDefined()
-    expect(register.getMetricsAsArray().length).toBe(3)
+    expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
+    metrics.forEach(metric => {
+      expect(register.getSingleMetric(metric)).toBeDefined()
+    })
   })
 
   test('tests if event handlers are registered without previous handlers', () => {
