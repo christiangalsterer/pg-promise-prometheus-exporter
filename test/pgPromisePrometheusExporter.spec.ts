@@ -19,6 +19,7 @@ describe('tests PgPoolPrometheusExporter', () => {
 
   const pgp: IMain = pgPromise(initOptionsWithoutHandlers)
   const db: IDatabase<unknown> = pgp({})
+
   const metrics: string[] = [
     'pg_commands_seconds', 'pg_tasks_seconds', 'pg_transactions_seconds'
   ]
