@@ -19,15 +19,15 @@ describe('tests PgPoolPrometheusExporter', () => {
 
   const pgp: IMain = pgPromise(initOptionsWithoutHandlers)
   const db: IDatabase<unknown> = pgp({})
+  const metrics: string[] = [
+    'pg_commands_seconds', 'pg_tasks_seconds', 'pg_transactions_seconds'
+  ]
 
   beforeEach(() => {
     register = new Registry()
   })
 
   test('test if all metrics are registered in registry', () => {
-    const metrics: string[] = [
-      'pg_commands_seconds', 'pg_tasks_seconds', 'pg_transactions_seconds'
-    ]
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
@@ -37,9 +37,6 @@ describe('tests PgPoolPrometheusExporter', () => {
   })
 
   test('test if all metrics are registered in registry with defaultLabels', () => {
-    const metrics: string[] = [
-      'pg_commands_seconds', 'pg_tasks_seconds', 'pg_transactions_seconds'
-    ]
     const options = { defaultLabels: { foo: 'bar', alice: 2 } }
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register, options)
