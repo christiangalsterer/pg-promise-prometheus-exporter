@@ -31,7 +31,7 @@ describe('test if all metrics are created with the correct parameters', () => {
     expect(Histogram).toHaveBeenCalledTimes(3)
 
     expect(Histogram).toHaveBeenCalledWith({
-      name: 'pg_commands_seconds',
+      name: 'pg_command_duration_seconds',
       help: 'Timer of pg commands',
       buckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
       labelNames: ['host', 'database', 'command', 'status'],
@@ -47,7 +47,7 @@ describe('test if all metrics are created with the correct parameters', () => {
     })
 
     expect(Histogram).toHaveBeenCalledWith({
-      name: 'pg_transactions_seconds',
+      name: 'pg_transaction_duration_seconds',
       help: 'Timer of pg transactions',
       buckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
       labelNames: ['host', 'database', 'transaction', 'status'],
@@ -62,7 +62,7 @@ describe('test if all metrics are created with the correct parameters', () => {
     expect(Histogram).toHaveBeenCalledTimes(3)
 
     expect(Histogram).toHaveBeenCalledWith({
-      name: 'pg_commands_seconds',
+      name: 'pg_command_duration_seconds',
       help: 'Timer of pg commands',
       buckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
       labelNames: ['host', 'database', 'command', 'status', 'foo', 'alice'],
@@ -78,7 +78,7 @@ describe('test if all metrics are created with the correct parameters', () => {
     })
 
     expect(Histogram).toHaveBeenCalledWith({
-      name: 'pg_transactions_seconds',
+      name: 'pg_transaction_duration_seconds',
       help: 'Timer of pg transactions',
       buckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
       labelNames: ['host', 'database', 'transaction', 'status', 'foo', 'alice'],

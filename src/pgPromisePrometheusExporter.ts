@@ -42,7 +42,7 @@ export class PgPromisePrometheusExporter {
     }
 
     this.commands = new Histogram({
-      name: 'pg_commands_seconds',
+      name: 'pg_command_duration_seconds',
       help: 'Timer of pg commands',
       buckets: this.options.commandsSecondsHistogramBuckets,
       labelNames: mergeLabelNamesWithStandardLabels(['host', 'database', 'command', 'status'], this.options.defaultLabels),
@@ -58,7 +58,7 @@ export class PgPromisePrometheusExporter {
     })
 
     this.transactions = new Histogram({
-      name: 'pg_transactions_seconds',
+      name: 'pg_transaction_duration_seconds',
       help: 'Timer of pg transactions',
       buckets: this.options.commandsSecondsHistogramBuckets,
       labelNames: mergeLabelNamesWithStandardLabels(['host', 'database', 'transaction', 'status'], this.options.defaultLabels),
@@ -120,7 +120,7 @@ export class PgPromisePrometheusExporter {
         this.commands.observe(mergeLabelsWithStandardLabels({ host: event.ctx.client.host + ':' + event.ctx.client.port, database: event.ctx.client.database, command: event.result.command, status: this.getStatus(event.ctx.ctx.success) }, this.options.defaultLabels), event.result.duration! / 1000)
       }
     } catch (error) {
-      console.error('An error occured in the reveive event handling', error)
+      console.error('An error occurred in the receive event handling', error)
     }
   }
 
@@ -132,7 +132,7 @@ export class PgPromisePrometheusExporter {
         this.tasks.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port, database: eventCtx.client.database, task: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
       }
     } catch (error) {
-      console.error('An error occured in the task event handling', error)
+      console.error('An error occurred in the task event handling', error)
     }
   }
 
@@ -144,7 +144,7 @@ export class PgPromisePrometheusExporter {
         this.transactions.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port, database: eventCtx.client.database, transaction: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
       }
     } catch (error) {
-      console.error('An error occured in the transaction event handling', error)
+      console.error('An error occurred in the transaction event handling', error)
     }
   }
 

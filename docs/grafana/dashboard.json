@@ -1569,7 +1569,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(pg_commands_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\"}[$__rate_interval])) by (instance, host, database, command) / sum(rate(pg_commands_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\"}[$__rate_interval])) by (instance, host, database, command)",
+          "expr": "sum(rate(pg_command_duration_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\"}[$__rate_interval])) by (instance, host, database, command) / sum(rate(pg_command_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\"}[$__rate_interval])) by (instance, host, database, command)",
           "hide": false,
           "legendFormat": "{{instance}} - {{host}} - {{database}} - {{command}}",
           "range": true,
@@ -1667,7 +1667,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(pg_commands_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\"}[$__rate_interval])) by (instance, host, database, command)",
+          "expr": "sum(rate(pg_command_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\"}[$__rate_interval])) by (instance, host, database, command)",
           "hide": false,
           "legendFormat": "{{instance}} - {{host}} - {{database}} - {{command}}",
           "range": true,
@@ -1765,7 +1765,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(pg_commands_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\", status=\"ERROR\"}[$__rate_interval])) by (instance, host, database, command)",
+          "expr": "sum(rate(pg_command_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\", status=\"ERROR\"}[$__rate_interval])) by (instance, host, database, command)",
           "hide": false,
           "legendFormat": "{{instance}} - {{host}} - {{database}} - {{command}}",
           "range": true,
@@ -1863,7 +1863,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(pg_commands_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\"}) by (instance, host, database, command)",
+          "expr": "sum(pg_command_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\"}) by (instance, host, database, command)",
           "hide": false,
           "legendFormat": "{{instance}} - {{host}} - {{database}} - {{command}}",
           "range": true,
@@ -1961,7 +1961,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(pg_commands_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\", status=\"ERROR\"}) by (instance, host, database, command)",
+          "expr": "sum(pg_command_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", command=~\"$command\", status=\"ERROR\"}) by (instance, host, database, command)",
           "hide": false,
           "legendFormat": "{{instance}} - {{host}} - {{database}} - {{command}}",
           "range": true,
@@ -2068,7 +2068,7 @@
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "sum(rate(pg_tasks_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task) / sum(rate(pg_tasks_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task)",
+              "expr": "sum(rate(pg_task_duration_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task) / sum(rate(pg_task_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task)",
               "hide": false,
               "legendFormat": "{{instance}} - {{host}} - {{database}} - {{task}}",
               "range": true,
@@ -2165,7 +2165,7 @@
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "sum(rate(pg_tasks_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task)",
+              "expr": "sum(rate(pg_task_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task)",
               "hide": false,
               "legendFormat": "{{instance}} - {{host}} - {{database}} - {{task}}",
               "range": true,
@@ -2262,7 +2262,7 @@
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "sum(pg_tasks_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}) by (instance, host, database, task)",
+              "expr": "sum(pg_task_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}) by (instance, host, database, task)",
               "hide": false,
               "legendFormat": "{{instance}} - {{host}} - {{database}} - {{task}}",
               "range": true,
@@ -2377,7 +2377,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(pg_transactions_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction) / sum(rate(pg_transactions_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction)",
+          "expr": "sum(rate(pg_transaction_duration_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction) / sum(rate(pg_transaction_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction)",
           "hide": false,
           "legendFormat": "{{instance}} - {{host}} - {{database}} - {{transaction}}",
           "range": true,
@@ -2475,7 +2475,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(pg_transactions_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction)",
+          "expr": "sum(rate(pg_transaction_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction)",
           "hide": false,
           "legendFormat": "{{instance}} - {{host}} - {{database}} - {{transaction}}",
           "range": true,
@@ -2573,7 +2573,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(pg_transactions_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}) by (instance, host, database, transaction)",
+          "expr": "sum(pg_transaction_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}) by (instance, host, database, transaction)",
           "hide": false,
           "legendFormat": "{{instance}} - {{host}} - {{database}} - {{transaction}}",
           "range": true,
@@ -2666,7 +2666,7 @@
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
         },
-        "definition": "label_values(pg_commands_seconds_sum,command)",
+        "definition": "label_values(pg_command_duration_seconds_sum,command)",
         "hide": 0,
         "includeAll": true,
         "label": "Command",
@@ -2674,7 +2674,7 @@
         "name": "command",
         "options": [],
         "query": {
-          "query": "label_values(pg_commands_seconds_sum,command)",
+          "query": "label_values(pg_command_duration_seconds_sum,command)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
@@ -2689,7 +2689,7 @@
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
         },
-        "definition": "label_values(pg_tasks_seconds_sum,task)",
+        "definition": "label_values(pg_task_duration_seconds_sum,task)",
         "hide": 0,
         "includeAll": false,
         "label": "Task",
@@ -2697,7 +2697,7 @@
         "name": "task",
         "options": [],
         "query": {
-          "query": "label_values(pg_tasks_seconds_sum,task)",
+          "query": "label_values(pg_task_duration_seconds_sum,task)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
@@ -2712,7 +2712,7 @@
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
         },
-        "definition": "label_values(pg_transactions_seconds_sum,transaction)",
+        "definition": "label_values(pg_transaction_duration_seconds_sum,transaction)",
         "hide": 0,
         "includeAll": false,
         "label": "Transaction",
@@ -2720,7 +2720,7 @@
         "name": "transaction",
         "options": [],
         "query": {
-          "query": "label_values(pg_transactions_seconds_sum,transaction)",
+          "query": "label_values(pg_transaction_duration_seconds_sum,transaction)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 2,

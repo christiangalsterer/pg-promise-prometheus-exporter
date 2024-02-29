@@ -17,12 +17,15 @@ In **addition** the exporter provides the following metrics.
 
 |Metric Name|Description|Labels|Since|
 |---|---|---|---|
-|pg_commands_seconds_sum|Duration of the executed command in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_command_: Name of the command</li><li>_status_: SUCCESS or ERROR</li><ul>|1.0.0|
-|pg_commands_seconds_count|Number of executed commands|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_command_: Name of the command</li><li>_status_: SUCCESS or ERROR</li><ul>|1.0.0|
-|pg_tasks_seconds_sum|Duration of the executed task in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|1.0.0|
-|pg_tasks_seconds_count|Number of executed tasks|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|1.0.0|
-|pg_transactions_seconds_sum|Duration of the executed transactions in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|1.0.0|
-|pg_transactions_seconds_count|Number of executed transactions|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|1.0.0|
+|pg_command_duration_seconds_bucket|Duration of the executed command in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_command_: Name of the command</li><li>_status_: SUCCESS or ERROR</li><ul>|2.0.0|
+|pg_command_duration_seconds_sum|The cumulated duration of the executed command in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_command_: Name of the command</li><li>_status_: SUCCESS or ERROR</li><ul>|2.0.0|
+|pg_command_duration_seconds_count|Number of executed commands|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_command_: Name of the command</li><li>_status_: SUCCESS or ERROR</li><ul>|2.0.0|
+|pg_task_duration_seconds_sum|Duration of the executed task in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_task_duration_seconds_sum|Cumulated duration of the executed task in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_task_duration_seconds_count|Number of executed tasks|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_transaction_duration_seconds_bucket|Duration of the executed transactions in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_transaction_duration_seconds_sum|Cumulated duration of the executed transactions in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_transaction_duration_seconds_count|Number of executed transactions|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
 
 ## Example Output
 
@@ -69,99 +72,99 @@ pg_pool_errors_total{host="localhost:5432",database="node_postgres_test1"} 1
 # TYPE pg_pool_connections_removed_total counter
 pg_pool_connections_removed_total{host="localhost:5432",database="node_postgres_test1"} 9
 
-# HELP pg_commands_seconds Timer of pg commands
-# TYPE pg_commands_seconds histogram
-pg_commands_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 21
-pg_commands_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 31
-pg_commands_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 38
-pg_commands_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
-pg_commands_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
-pg_commands_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
-pg_commands_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
-pg_commands_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
-pg_commands_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
-pg_commands_seconds_sum{host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 3.475
-pg_commands_seconds_count{host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
-pg_commands_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 8
-pg_commands_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 14
-pg_commands_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 18
-pg_commands_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
-pg_commands_seconds_sum{host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 2.116
-pg_commands_seconds_count{host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
-pg_commands_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 12
-pg_commands_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 17
-pg_commands_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 18
-pg_commands_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
-pg_commands_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
-pg_commands_seconds_sum{host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 1.6620000000000001
-pg_commands_seconds_count{host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
+# HELP pg_command_duration_seconds Timer of pg commands
+# TYPE pg_command_duration_seconds histogram
+pg_command_duration_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 21
+pg_command_duration_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 31
+pg_command_duration_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 38
+pg_command_duration_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
+pg_command_duration_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
+pg_command_duration_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
+pg_command_duration_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
+pg_command_duration_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
+pg_command_duration_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
+pg_command_duration_seconds_sum{host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 3.475
+pg_command_duration_seconds_count{host="localhost:5432",database="node_postgres_test1",command="SELECT",status="SUCCESS"} 40
+pg_command_duration_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 8
+pg_command_duration_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 14
+pg_command_duration_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 18
+pg_command_duration_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
+pg_command_duration_seconds_sum{host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 2.116
+pg_command_duration_seconds_count{host="localhost:5432",database="node_postgres_test1",command="BEGIN",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 0
+pg_command_duration_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 12
+pg_command_duration_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 17
+pg_command_duration_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 18
+pg_command_duration_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
+pg_command_duration_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
+pg_command_duration_seconds_sum{host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 1.6620000000000001
+pg_command_duration_seconds_count{host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
 
 # HELP pg_tasks_seconds Timer of pg tasks
 # TYPE pg_tasks_seconds histogram
-pg_tasks_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
-pg_tasks_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
-pg_tasks_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
-pg_tasks_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
-pg_tasks_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
-pg_tasks_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
-pg_tasks_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",task="my-task"} 8
-pg_tasks_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",task="my-task"} 14
-pg_tasks_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",task="my-task"} 18
-pg_tasks_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
-pg_tasks_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
-pg_tasks_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
-pg_tasks_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
-pg_tasks_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
-pg_tasks_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
-pg_tasks_seconds_sum{host="localhost:5432",database="node_postgres_test1",task="my-task"} 2.139
-pg_tasks_seconds_count{host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
+pg_task_duration_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
+pg_task_duration_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
+pg_task_duration_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
+pg_task_duration_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
+pg_task_duration_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
+pg_task_duration_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
+pg_task_duration_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",task="my-task"} 8
+pg_task_duration_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",task="my-task"} 14
+pg_task_duration_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",task="my-task"} 18
+pg_task_duration_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
+pg_task_duration_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
+pg_task_duration_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
+pg_task_duration_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
+pg_task_duration_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
+pg_task_duration_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
+pg_task_duration_seconds_sum{host="localhost:5432",database="node_postgres_test1",task="my-task"} 2.139
+pg_task_duration_seconds_count{host="localhost:5432",database="node_postgres_test1",task="my-task"} 20
 
-# HELP pg_transactions_seconds Timer of pg transactions
-# TYPE pg_transactions_seconds histogram
-pg_transactions_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
-pg_transactions_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
-pg_transactions_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
-pg_transactions_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
-pg_transactions_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
-pg_transactions_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
-pg_transactions_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
-pg_transactions_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
-pg_transactions_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 11
-pg_transactions_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 18
-pg_transactions_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
-pg_transactions_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
-pg_transactions_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
-pg_transactions_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
-pg_transactions_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
-pg_transactions_seconds_sum{host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 5.142
-pg_transactions_seconds_count{host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
+# HELP pg_transaction_duration_seconds Timer of pg transactions
+# TYPE pg_transaction_duration_seconds histogram
+pg_transaction_duration_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
+pg_transaction_duration_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
+pg_transaction_duration_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
+pg_transaction_duration_seconds_bucket{le="0.02",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
+pg_transaction_duration_seconds_bucket{le="0.03",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
+pg_transaction_duration_seconds_bucket{le="0.04",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
+pg_transaction_duration_seconds_bucket{le="0.05",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
+pg_transaction_duration_seconds_bucket{le="0.1",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 0
+pg_transaction_duration_seconds_bucket{le="0.2",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 11
+pg_transaction_duration_seconds_bucket{le="0.5",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 18
+pg_transaction_duration_seconds_bucket{le="1",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
+pg_transaction_duration_seconds_bucket{le="2",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
+pg_transaction_duration_seconds_bucket{le="5",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
+pg_transaction_duration_seconds_bucket{le="10",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
+pg_transaction_duration_seconds_bucket{le="+Inf",host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
+pg_transaction_duration_seconds_sum{host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 5.142
+pg_transaction_duration_seconds_count{host="localhost:5432",database="node_postgres_test1",transaction="my-transaction"} 20
 ```
 
 # Usage
