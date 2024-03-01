@@ -2,7 +2,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/christiangalsterer/pg-promise-prometheus-exporter/badge.svg)](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/security/advisories)
 [![npm downloads](https://img.shields.io/npm/dt/@christiangalsterer/pg-promise-prometheus-exporter.svg)](https://www.npmjs.com/package/@christiangalsterer/pg-promise-prometheus-exporter)
 [![npm version](https://img.shields.io/npm/v/@christiangalsterer/pg-promise-prometheus-exporter.svg)](https://www.npmjs.com/package/@christiangalsterer/pg-promise-prometheus-exporter?activeTab=versions)
-[![npm licence](https://img.shields.io/npm/l/@christiangalsterer/pg-promise-prometheus-exporter.svg)](https://www.npmjs.com/package/@christiangalsterer/pg-promise-prometheus-exporter)
+[![npm license](https://img.shields.io/npm/l/@christiangalsterer/pg-promise-prometheus-exporter.svg)](https://www.npmjs.com/package/@christiangalsterer/pg-promise-prometheus-exporter)
 [![renovate](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://developer.mend.io/github/christiangalsterer/pg-promise-prometheus-exporter)
 ![github stars](https://img.shields.io/github/stars/christiangalsterer/pg-promise-prometheus-exporter.svg)
 
@@ -44,7 +44,7 @@ pg_client_disconnects_total{host="localhost:5432",database="node_postgres_test1"
 # TYPE pg_pool_connections_created_total counter
 pg_pool_connections_created_total{host="localhost:5432",database="node_postgres_test1"} 19
 
-# HELP pg_pool_size The current size of the connection pool, including actice and idle members.
+# HELP pg_pool_size The current size of the connection pool, including active and idle members.
 # TYPE pg_pool_size gauge
 pg_pool_size{host="localhost:5432",database="node_postgres_test1"} 10
 
@@ -171,7 +171,7 @@ pg_transaction_duration_seconds_count{host="localhost:5432",database="node_postg
 
 ## Add Dependency
 
-Add the following dependency to your project to download the packge from [npm](https://www.npmjs.com/package/@christiangalsterer/pg-promise-prometheus-exporter).
+Add the following dependency to your project to download the package from [npm](https://www.npmjs.com/package/@christiangalsterer/pg-promise-prometheus-exporter).
 
 ```sh
 npm i @christiangalsterer/pg-promise-prometheus-exporter
