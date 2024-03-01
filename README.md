@@ -126,8 +126,8 @@ pg_command_duration_seconds_bucket{le="+Inf",host="localhost:5432",database="nod
 pg_command_duration_seconds_sum{host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 1.6620000000000001
 pg_command_duration_seconds_count{host="localhost:5432",database="node_postgres_test1",command="COMMIT",status="SUCCESS"} 20
 
-# HELP pg_tasks_seconds Timer of pg tasks
-# TYPE pg_tasks_seconds histogram
+# HELP pg_task_duration_seconds Timer of pg tasks
+# TYPE pg_task_duration_seconds histogram
 pg_task_duration_seconds_bucket{le="0.001",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
 pg_task_duration_seconds_bucket{le="0.005",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0
 pg_task_duration_seconds_bucket{le="0.01",host="localhost:5432",database="node_postgres_test1",task="my-task"} 0

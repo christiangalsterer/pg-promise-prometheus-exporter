@@ -1486,7 +1486,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "Average command execution latency.",
+      "description": "Average command execution duration.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1576,7 +1576,7 @@
           "refId": "A"
         }
       ],
-      "title": "Commands Latency By Command",
+      "title": "Commands Duration By Command",
       "type": "timeseries"
     },
     {
@@ -1972,7 +1972,7 @@
       "type": "timeseries"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1980,313 +1980,8 @@
         "y": 67
       },
       "id": 167,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "description": "Average task execution latency.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 4
-          },
-          "id": 168,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "mean",
-                "max",
-                "min"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(pg_task_duration_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task) / sum(rate(pg_task_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task)",
-              "hide": false,
-              "legendFormat": "{{instance}} - {{host}} - {{database}} - {{task}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Tasks Latency By Task",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 4
-          },
-          "id": 169,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "mean",
-                "max",
-                "min"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(pg_task_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task)",
-              "hide": false,
-              "legendFormat": "{{instance}} - {{host}} - {{database}} - {{task}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Tasks Rate By Task",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 4
-          },
-          "id": 171,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull",
-                "mean",
-                "max",
-                "min"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true,
-              "sortBy": "Last *",
-              "sortDesc": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "expr": "sum(pg_task_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}) by (instance, host, database, task)",
-              "hide": false,
-              "legendFormat": "{{instance}} - {{host}} - {{database}} - {{task}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Total Tasks By Task",
-          "type": "timeseries"
-        }
-      ],
-      "title": "Tasks",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 68
-      },
-      "id": 173,
       "panels": [],
-      "title": "Transactions",
+      "title": "Tasks",
       "type": "row"
     },
     {
@@ -2294,7 +1989,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "Average transaction execution latency.",
+      "description": "Average task execution duration.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2348,9 +2043,9 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 69
+        "y": 68
       },
-      "id": 174,
+      "id": 168,
       "options": {
         "legend": {
           "calcs": [
@@ -2377,14 +2072,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(pg_transaction_duration_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction) / sum(rate(pg_transaction_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction)",
+          "expr": "sum(rate(pg_task_duration_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task) / sum(rate(pg_task_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task)",
           "hide": false,
-          "legendFormat": "{{instance}} - {{host}} - {{database}} - {{transaction}}",
+          "legendFormat": "{{instance}} - {{host}} - {{database}} - {{task}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Transaction Latency By Transaction",
+      "title": "Tasks Duration By Task",
       "type": "timeseries"
     },
     {
@@ -2446,7 +2141,314 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 69
+        "y": 68
+      },
+      "id": 169,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(pg_task_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}[$__rate_interval])) by (instance, host, database, task)",
+          "hide": false,
+          "legendFormat": "{{instance}} - {{host}} - {{database}} - {{task}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Tasks Rate By Task",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 68
+      },
+      "id": 171,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(pg_task_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", task=~\"$task\"}) by (instance, host, database, task)",
+          "hide": false,
+          "legendFormat": "{{instance}} - {{host}} - {{database}} - {{task}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Tasks By Task",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 76
+      },
+      "id": 173,
+      "panels": [],
+      "title": "Transactions",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "Average transaction execution duration.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 77
+      },
+      "id": 174,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(pg_transaction_duration_seconds_sum{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction) / sum(rate(pg_transaction_duration_seconds_count{instance=~\"$instance\", host=~\"$host\", database=~\"$database\", transaction=~\"$transaction\"}[$__rate_interval])) by (instance, host, database, transaction)",
+          "hide": false,
+          "legendFormat": "{{instance}} - {{host}} - {{database}} - {{transaction}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Transaction Duration By Transaction",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 77
       },
       "id": 175,
       "options": {
@@ -2544,7 +2546,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 69
+        "y": 77
       },
       "id": 176,
       "options": {
@@ -2584,7 +2586,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
@@ -2691,9 +2693,9 @@
         },
         "definition": "label_values(pg_task_duration_seconds_sum,task)",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "Task",
-        "multi": false,
+        "multi": true,
         "name": "task",
         "options": [],
         "query": {
@@ -2714,9 +2716,9 @@
         },
         "definition": "label_values(pg_transaction_duration_seconds_sum,transaction)",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "Transaction",
-        "multi": false,
+        "multi": true,
         "name": "transaction",
         "options": [],
         "query": {
@@ -2765,6 +2767,6 @@
   "timezone": "browser",
   "title": "pg-promise",
   "uid": "f2e782d1-5654-4902-ada3-fa655bfc930f",
-  "version": 35,
+  "version": 48,
   "weekStart": ""
 }

@@ -39,7 +39,7 @@ describe('test if all metrics are created with the correct parameters', () => {
     })
 
     expect(Histogram).toHaveBeenCalledWith({
-      name: 'pg_tasks_seconds',
+      name: 'pg_task_duration_seconds',
       help: 'Timer of pg tasks',
       buckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
       labelNames: ['host', 'database', 'task', 'status'],
@@ -70,7 +70,7 @@ describe('test if all metrics are created with the correct parameters', () => {
     })
 
     expect(Histogram).toHaveBeenCalledWith({
-      name: 'pg_tasks_seconds',
+      name: 'pg_task_duration_seconds',
       help: 'Timer of pg tasks',
       buckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
       labelNames: ['host', 'database', 'task', 'status', 'foo', 'alice'],

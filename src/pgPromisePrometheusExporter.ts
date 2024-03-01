@@ -50,7 +50,7 @@ export class PgPromisePrometheusExporter {
     })
 
     this.tasks = new Histogram({
-      name: 'pg_tasks_seconds',
+      name: 'pg_task_duration_seconds',
       help: 'Timer of pg tasks',
       buckets: this.options.commandsSecondsHistogramBuckets,
       labelNames: mergeLabelNamesWithStandardLabels(['host', 'database', 'task', 'status'], this.options.defaultLabels),
