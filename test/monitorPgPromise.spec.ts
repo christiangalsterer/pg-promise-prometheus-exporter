@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, test, jest } from '@jest/globals'
+import { beforeEach, describe, expect, jest, test } from '@jest/globals'
+import pgPromise, { type IDatabase, type IInitOptions, type IMain } from 'pg-promise'
 import { Registry } from 'prom-client'
-import pgPromise, { type IMain, type IInitOptions, type IDatabase } from 'pg-promise'
 
 import { monitorPgPromise } from '../src/monitorPgPromise'
 import { PgPromisePrometheusExporter } from '../src/pgPromisePrometheusExporter'

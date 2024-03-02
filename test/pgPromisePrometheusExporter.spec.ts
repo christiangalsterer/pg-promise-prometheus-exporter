@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, test } from '@jest/globals'
-import { Registry } from 'prom-client'
-import pgPromise, { type IMain, type IInitOptions, type IDatabase } from 'pg-promise'
-import { PgPromisePrometheusExporter } from '../src/pgPromisePrometheusExporter'
 import { monitorPgPool } from '@christiangalsterer/node-postgres-prometheus-exporter'
+import { beforeEach, describe, expect, test } from '@jest/globals'
+import pgPromise, { type IDatabase, type IInitOptions, type IMain } from 'pg-promise'
+import { Registry } from 'prom-client'
+import { PgPromisePrometheusExporter } from '../src/pgPromisePrometheusExporter'
 
 jest.mock('@christiangalsterer/node-postgres-prometheus-exporter', () => ({
   monitorPgPool: jest.fn()

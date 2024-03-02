@@ -1,9 +1,9 @@
-import { type Registry, Histogram } from 'prom-client'
-import { type PgPromiseExporterOptions } from './pgPromiseExporterOptions'
-import { mergeLabelNamesWithStandardLabels, mergeLabelsWithStandardLabels } from './utils'
-import { type IEventContext, type IResultExt, type IInitOptions, type IDatabase } from 'pg-promise'
 import { monitorPgPool } from '@christiangalsterer/node-postgres-prometheus-exporter'
 import { type PgPoolExporterOptions } from '@christiangalsterer/node-postgres-prometheus-exporter/dist/pgPoolExporterOptions'
+import { type IDatabase, type IEventContext, type IInitOptions, type IResultExt } from 'pg-promise'
+import { Histogram, type Registry } from 'prom-client'
+import { type PgPromiseExporterOptions } from './pgPromiseExporterOptions'
+import { mergeLabelNamesWithStandardLabels, mergeLabelsWithStandardLabels } from './utils'
 
 /**
  * Exports metrics for pg-promise

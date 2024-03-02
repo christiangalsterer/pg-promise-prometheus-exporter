@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { beforeEach } from '@jest/globals'
-import { PgPromisePrometheusExporter } from '../src/pgPromisePrometheusExporter'
+import pgPromise, { type IDatabase, type IInitOptions, type IMain } from 'pg-promise'
 import { Histogram, type Registry } from 'prom-client'
-import pgPromise, { type IMain, type IInitOptions, type IDatabase } from 'pg-promise'
+import { PgPromisePrometheusExporter } from '../src/pgPromisePrometheusExporter'
 
 jest.mock('prom-client', () => ({
   Histogram: jest.fn(() => {

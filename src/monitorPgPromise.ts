@@ -1,8 +1,8 @@
-import { type Registry } from 'prom-client'
 import type pgPromise from 'pg-promise'
-import { PgPromisePrometheusExporter } from './pgPromisePrometheusExporter'
-import { type PgPromiseExporterOptions } from './pgPromiseExporterOptions'
 import { type IDatabase } from 'pg-promise'
+import { type Registry } from 'prom-client'
+import { type PgPromiseExporterOptions } from './pgPromiseExporterOptions'
+import { PgPromisePrometheusExporter } from './pgPromisePrometheusExporter'
 
 /**
  * Exposes metrics for pg-promise in prometheus format.
