@@ -2,6 +2,7 @@ import { monitorPgPool } from '@christiangalsterer/node-postgres-prometheus-expo
 import { type PgPoolExporterOptions } from '@christiangalsterer/node-postgres-prometheus-exporter/dist/pgPoolExporterOptions'
 import { type IDatabase, type IEventContext, type IInitOptions, type IResultExt } from 'pg-promise'
 import { Histogram, type Registry } from 'prom-client'
+
 import { type PgPromiseExporterOptions } from './pgPromiseExporterOptions'
 import { mergeLabelNamesWithStandardLabels, mergeLabelsWithStandardLabels } from './utils'
 

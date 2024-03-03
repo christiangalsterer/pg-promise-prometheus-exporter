@@ -2,6 +2,7 @@
 import { beforeEach } from '@jest/globals'
 import pgPromise, { type IDatabase, type IInitOptions, type IMain } from 'pg-promise'
 import { Histogram, type Registry } from 'prom-client'
+
 import { PgPromisePrometheusExporter } from '../src/pgPromisePrometheusExporter'
 
 jest.mock('prom-client', () => ({
