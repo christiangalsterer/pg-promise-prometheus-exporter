@@ -13,6 +13,7 @@
 A prometheus exporter exposing metrics for [pg-promise](https://www.npmjs.com/package/pg-promise).
 
 ## Available Metrics
+
 As the exporter is utilizing the [node-postgres-prometheus-exporter](https://github.com/christiangalsterer/node-postgres-prometheus-exporter) for the majority of the connection and pool usage metrics, please check the [documentation](https://github.com/christiangalsterer/node-postgres-prometheus-exporter?tab=readme-ov-file#available-metrics) for the list of metrics.
 
 In **addition** the exporter provides the following metrics.
@@ -22,12 +23,12 @@ In **addition** the exporter provides the following metrics.
 |pg_command_duration_seconds_bucket|Duration of the executed command in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_command_: Name of the command</li><li>_status_: SUCCESS or ERROR</li><ul>|2.0.0|
 |pg_command_duration_seconds_sum|The cumulated duration of the executed command in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_command_: Name of the command</li><li>_status_: SUCCESS or ERROR</li><ul>|2.0.0|
 |pg_command_duration_seconds_count|Number of executed commands|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_command_: Name of the command</li><li>_status_: SUCCESS or ERROR</li><ul>|2.0.0|
-|pg_task_duration_seconds_bucket|Duration of the executed task in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
-|pg_task_duration_seconds_sum|Cumulated duration of the executed task in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
-|pg_task_duration_seconds_count|Number of executed tasks|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
-|pg_transaction_duration_seconds_bucket|Duration of the executed transactions in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
-|pg_transaction_duration_seconds_sum|Cumulated duration of the executed transactions in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
-|pg_transaction_duration_seconds_count|Number of executed transactions|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. __Note:__ The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_task_duration_seconds_bucket|Duration of the executed task in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. **Note:** The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_task_duration_seconds_sum|Cumulated duration of the executed task in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. **Note:** The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_task_duration_seconds_count|Number of executed tasks|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_task_: The tag as provided when executing the task. **Note:** The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_transaction_duration_seconds_bucket|Duration of the executed transactions in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. **Note:** The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_transaction_duration_seconds_sum|Cumulated duration of the executed transactions in seconds|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. **Note:** The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
+|pg_transaction_duration_seconds_count|Number of executed transactions|<ul><li>_host_: The host of the database</li><li>_database_: The database name</li><li>_transaction_: The tag as provided when executing the transaction. **Note:** The tag will be only added if it is a valid label value.</li><ul>|2.0.0|
 
 ## Example Output
 
@@ -235,7 +236,7 @@ pgPromiseExporter.monitorPgPromise(database, initOptions, register)
 
 # Configuration
 
-The exporter can be configured via properties specified on the optional parameter of type 
+The exporter can be configured via properties specified on the optional parameter of type
 _PgPromiseExporterOptions_.
 
 ## PgPromiseExporterOptions
@@ -247,7 +248,6 @@ _PgPromiseExporterOptions_.
 # Event Handling
 
 If there are already event handler registered for the events provided by pg-promise, the library will preserve the defined event handlers when the initOptions are initialized.
-
 
 # Grafana Dashboard
 
@@ -273,6 +273,7 @@ Here an example for pg-promise transaction metrics:
 The changes to project can be found in the [changelog](/CHANGELOG.md).
 
 # Compatibility
+
 The following table list the compatibility of exporter versions with different pg-promise and prom-client versions.
 
 |Exporter Version|pg-promise Version|prom-client version|
@@ -289,6 +290,6 @@ If you want to support this project, please add a link to your project and/or co
 
 # Related Projects
 
-If you are looking for a way to monitor your MongoDB Driver for Node.js you may have a look at https://github.com/christiangalsterer/mongodb-driver-prometheus-exporter.
+If you are looking for a way to monitor your MongoDB Driver for Node.js you may have a look at <https://github.com/christiangalsterer/mongodb-driver-prometheus-exporter>.
 
-If you are looking for a way to monitor KafkaJs for Node.js you may have a look at https://github.com/christiangalsterer/kafkajs-prometheus-exporter.
+If you are looking for a way to monitor KafkaJs for Node.js you may have a look at <https://github.com/christiangalsterer/kafkajs-prometheus-exporter>.
