@@ -23,7 +23,7 @@ describe('tests monitorPgPool', () => {
     // eslint-disable-next-line
     monitorPgPromise(db, initOptions, register)
     expect(mockPromisePrometheusExporter).toHaveBeenCalledTimes(1)
-    expect(mockPromisePrometheusExporter).toBeCalledWith(db, initOptions, register, undefined)
+    expect(mockPromisePrometheusExporter).toHaveBeenCalledWith(db, initOptions, register, undefined)
   })
 
   test('tests if monitorPgPromise called PgPromisePrometheusExporter with optional parameter', () => {
@@ -31,7 +31,7 @@ describe('tests monitorPgPool', () => {
     // eslint-disable-next-line
     monitorPgPromise(db, initOptions, register, options)
     expect(mockPromisePrometheusExporter).toHaveBeenCalledTimes(1)
-    expect(mockPromisePrometheusExporter).toBeCalledWith(db, initOptions, register, options)
+    expect(mockPromisePrometheusExporter).toHaveBeenCalledWith(db, initOptions, register, options)
   })
 
   test('tests if monitorPgPromise called methods of PgPromisePrometheusExporter instance', () => {

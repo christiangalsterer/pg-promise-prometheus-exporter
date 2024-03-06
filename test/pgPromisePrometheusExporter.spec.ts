@@ -28,7 +28,7 @@ describe('tests PgPoolPrometheusExporter', () => {
     register = new Registry()
   })
 
-  test('test if all metrics are registered in registry', () => {
+  test('if all metrics are registered in registry', () => {
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
@@ -37,7 +37,7 @@ describe('tests PgPoolPrometheusExporter', () => {
     })
   })
 
-  test('test if all metrics are registered in registry with defaultLabels', () => {
+  test('if all metrics are registered in registry with defaultLabels', () => {
     const options = { defaultLabels: { foo: 'bar', alice: 2 } }
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register, options)
@@ -52,13 +52,13 @@ describe('tests PgPoolPrometheusExporter', () => {
     exporter.enableMetrics()
     expect(initOptionsWithoutHandlers.receive).toBeDefined()
     expect(initOptionsWithoutHandlers.receive).toBeInstanceOf(Function)
-    expect(initOptionsWithoutHandlers.receive?.name).toStrictEqual('bound onReceive')
+    expect(initOptionsWithoutHandlers.receive?.name).toBe('bound onReceive')
     expect(initOptionsWithoutHandlers.task).toBeDefined()
     expect(initOptionsWithoutHandlers.task).toBeInstanceOf(Function)
-    expect(initOptionsWithoutHandlers.task?.name).toStrictEqual('bound onTask')
+    expect(initOptionsWithoutHandlers.task?.name).toBe('bound onTask')
     expect(initOptionsWithoutHandlers.transact).toBeDefined()
     expect(initOptionsWithoutHandlers.transact).toBeInstanceOf(Function)
-    expect(initOptionsWithoutHandlers.transact?.name).toStrictEqual('bound onTransaction')
+    expect(initOptionsWithoutHandlers.transact?.name).toBe('bound onTransaction')
   })
 
   test('tests if event handlers are registered with previous handlers', () => {
@@ -67,14 +67,14 @@ describe('tests PgPoolPrometheusExporter', () => {
     expect(initOptionsWithHandlers.receive).toBeDefined()
     expect(initOptionsWithHandlers.receive).toBeInstanceOf(Function)
     expect(initOptionsWithHandlers.receive?.name).toBeDefined()
-    expect(initOptionsWithHandlers.receive?.name).not.toStrictEqual('bound onReceive')
+    expect(initOptionsWithHandlers.receive?.name).not.toBe('bound onReceive')
     expect(initOptionsWithHandlers.task).toBeInstanceOf(Function)
     expect(initOptionsWithHandlers.task?.name).toBeDefined()
-    expect(initOptionsWithHandlers.task?.name).not.toStrictEqual('bound onTask')
+    expect(initOptionsWithHandlers.task?.name).not.toBe('bound onTask')
     expect(initOptionsWithHandlers.transact).toBeDefined()
     expect(initOptionsWithHandlers.transact).toBeInstanceOf(Function)
     expect(initOptionsWithHandlers.transact?.name).toBeDefined()
-    expect(initOptionsWithHandlers.transact?.name).not.toStrictEqual('bound onTransaction')
+    expect(initOptionsWithHandlers.transact?.name).not.toBe('bound onTransaction')
   })
 
   test('tests if monitorPgPool is called with default parameter', () => {
