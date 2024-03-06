@@ -9,7 +9,7 @@ jest.mock('@christiangalsterer/node-postgres-prometheus-exporter', () => ({
   monitorPgPool: jest.fn()
 }))
 
-describe('tests PgPoolPrometheusExporter', () => {
+describe('tests PgPromisePrometheusExporter', () => {
   let register: Registry
   const initOptionsWithoutHandlers: IInitOptions = {}
   const initOptionsWithHandlers: IInitOptions = {
@@ -28,7 +28,7 @@ describe('tests PgPoolPrometheusExporter', () => {
     register = new Registry()
   })
 
-  test('if all metrics are registered in registry', () => {
+  test('all metrics are registered in registry', () => {
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
@@ -37,7 +37,7 @@ describe('tests PgPoolPrometheusExporter', () => {
     })
   })
 
-  test('if all metrics are registered in registry with defaultLabels', () => {
+  test('all metrics are registered in registry with defaultLabels', () => {
     const options = { defaultLabels: { foo: 'bar', alice: 2 } }
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register, options)
@@ -47,7 +47,7 @@ describe('tests PgPoolPrometheusExporter', () => {
     })
   })
 
-  test('tests if event handlers are registered without previous handlers', () => {
+  test('event handlers are registered without previous handlers', () => {
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     exporter.enableMetrics()
     expect(initOptionsWithoutHandlers.receive).toBeDefined()
@@ -61,7 +61,7 @@ describe('tests PgPoolPrometheusExporter', () => {
     expect(initOptionsWithoutHandlers.transact?.name).toBe('bound onTransaction')
   })
 
-  test('tests if event handlers are registered with previous handlers', () => {
+  test('event handlers are registered with previous handlers', () => {
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register)
     exporter.enableMetrics()
     expect(initOptionsWithHandlers.receive).toBeDefined()
@@ -77,14 +77,14 @@ describe('tests PgPoolPrometheusExporter', () => {
     expect(initOptionsWithHandlers.transact?.name).not.toBe('bound onTransaction')
   })
 
-  test('tests if monitorPgPool is called with default parameter', () => {
+  test('monitorPgPool is called', () => {
     const monitorPgPoolMock = monitorPgPool as jest.Mock
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register)
     exporter.enableMetrics()
     expect(monitorPgPoolMock).toHaveBeenCalledWith(db.$pool, register, { defaultLabels: undefined })
   })
 
-  test('tests if monitorPgPool is called with optional parameter', () => {
+  test('monitorPgPool is called with default labels', () => {
     const monitorPgPoolMock = monitorPgPool as jest.Mock
     const options = { defaultLabels: { foo: 'bar', alice: 2 } }
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register, options)

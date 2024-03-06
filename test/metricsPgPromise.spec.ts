@@ -14,7 +14,7 @@ jest.mock('prom-client', () => ({
   })
 }))
 
-describe('test if all metrics are created with the correct parameters', () => {
+describe('all metrics are created with the correct parameters', () => {
   const options = { defaultLabels: { foo: 'bar', alice: 2 } }
   const register: Registry = {} as Registry
   const initOptions: IInitOptions = {}
@@ -25,7 +25,7 @@ describe('test if all metrics are created with the correct parameters', () => {
     jest.clearAllMocks()
   })
 
-  test('tests if all pool metrics are created', () => {
+  test('all metrics are created', () => {
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptions, register)
 
@@ -56,7 +56,7 @@ describe('test if all metrics are created with the correct parameters', () => {
     })
   })
 
-  test('tests if all pool metrics are created with default labels', () => {
+  test('all metrics are created with default labels', () => {
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptions, register, options)
 
