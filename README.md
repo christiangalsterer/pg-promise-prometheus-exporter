@@ -1,4 +1,5 @@
 [![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/christiangalsterer/pg-promise-prometheus-exporter/build.yaml)](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/actions/workflows/build.yaml)
+[![Coverage Status](https://coveralls.io/repos/github/christiangalsterer/pg-promise-prometheus-exporter/badge.svg?branch=main)](https://coveralls.io/github/christiangalsterer/pg-promise-prometheus-exporter?branch=main)
 [![Known Vulnerabilities](https://snyk.io/test/github/christiangalsterer/pg-promise-prometheus-exporter/badge.svg)](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/security/advisories)
 [![npm downloads](https://img.shields.io/npm/dt/@christiangalsterer/pg-promise-prometheus-exporter.svg)](https://www.npmjs.com/package/@christiangalsterer/pg-promise-prometheus-exporter)
 [![npm version](https://img.shields.io/npm/v/@christiangalsterer/pg-promise-prometheus-exporter.svg)](https://www.npmjs.com/package/@christiangalsterer/pg-promise-prometheus-exporter?activeTab=versions)
