@@ -48,7 +48,7 @@
   "license": "MIT",
   "dependencies": {
     "@christiangalsterer/node-postgres-prometheus-exporter": "^1.0.0",
-    "pg-promise": "^11.5.4",
+    "pg-promise": "^11.5.5",
     "prom-client": "^15.0.0"
   },
   "devDependencies": {
