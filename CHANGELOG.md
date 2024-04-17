@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v2.0.0...v2.1.0) (2024-04-17)
+
+
+### Features
+
+* add support for node coveralls reports ([dc1170e](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/dc1170e64d925cc9cc8bc78c1817ecd6c448026b))
+* Security upgrade pg-promise from 11.5.4 to 11.5.5 ([2dea15a](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/2dea15a9f44a94fe7e8d162f3f4aab4bc4e8d035))
+
 ## [2.0.0] 2024-03-01
 
 ### Changed
