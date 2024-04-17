@@ -1,6 +1,6 @@
 {
   "name": "@christiangalsterer/pg-promise-prometheus-exporter",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A prometheus exporter for pg-promise",
   "repository": {
     "type": "git",
