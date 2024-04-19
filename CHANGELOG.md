@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v2.1.0...v2.1.1) (2024-04-19)
+
+
+### Bug Fixes
+
+* add support for auto rebase pull requests, restrict to main branch ([951f12f](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/951f12f68128a4dd62ff427b76ef6588f17c0cb8))
+
 ## [2.1.0](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v2.0.0...v2.1.0) (2024-04-17)
 
 
