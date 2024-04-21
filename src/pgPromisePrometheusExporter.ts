@@ -31,7 +31,7 @@ export class PgPromisePrometheusExporter {
     transact: { func: ((eventCtx: IEventContext) => void) } | undefined
   }
 
-  constructor(db: IDatabase<unknown>, pgPromiseInitOptions: IInitOptions, register: Registry, options?: PgPromiseExporterOptions) {
+  constructor (db: IDatabase<unknown>, pgPromiseInitOptions: IInitOptions, register: Registry, options?: PgPromiseExporterOptions) {
     this.db = db
     this.pgPromiseInitOptions = pgPromiseInitOptions
     this.register = register
@@ -67,7 +67,7 @@ export class PgPromisePrometheusExporter {
     })
   }
 
-  public enableMetrics(): void {
+  public enableMetrics (): void {
     const pgPoolExporterOptions: PgPoolExporterOptions = { defaultLabels: this.options.defaultLabels }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     monitorPgPool(this.db.$pool, this.register, pgPoolExporterOptions)
@@ -116,10 +116,10 @@ export class PgPromisePrometheusExporter {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-invalid-void-type
-  onReceive(event: { data: any[], result: void | IResultExt, ctx: IEventContext }): void {
+  onReceive (event: { data: any[], result: void | IResultExt, ctx: IEventContext }): void {
     try {
       if (event.result !== undefined) {
-        this.commands.observe(mergeLabelsWithStandardLabels({ host: event.ctx.client.host + ':' + event.ctx.client.port, database: event.ctx.client.database, command: event.result.command, status: this.getStatus(event.ctx.ctx.success) }, this.options.defaultLabels), event.result.duration! / 1000)
+        this.commands.observe(mergeLabelsWithStandardLabels({ host: event.ctx.client.host + ':' + event.ctx.client.port.toString(), database: event.ctx.client.database, command: event.result.command, status: this.getStatus(event.ctx.ctx.success) }, this.options.defaultLabels), event.result.duration! / 1000)
       }
     } catch (error) {
       console.error('An error occurred in the receive event handling', error)
@@ -127,11 +127,11 @@ export class PgPromisePrometheusExporter {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onTask(eventCtx: IEventContext): void {
+  onTask (eventCtx: IEventContext): void {
     try {
       if (eventCtx.ctx.finish != null) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.tasks.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port, database: eventCtx.client.database, task: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
+        this.tasks.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, task: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
       }
     } catch (error) {
       console.error('An error occurred in the task event handling', error)
@@ -139,18 +139,18 @@ export class PgPromisePrometheusExporter {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onTransaction(eventCtx: IEventContext): void {
+  onTransaction (eventCtx: IEventContext): void {
     try {
       if (eventCtx.ctx.finish != null) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.transactions.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port, database: eventCtx.client.database, transaction: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
+        this.transactions.observe(mergeLabelsWithStandardLabels({ host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, transaction: eventCtx.ctx.tag }, this.options.defaultLabels), eventCtx.ctx.duration! / 1000)
       }
     } catch (error) {
       console.error('An error occurred in the transaction event handling', error)
     }
   }
 
-  private getStatus(success: boolean | undefined): string {
+  private getStatus (success: boolean | undefined): string {
     let status = 'ERROR'
     if (success ?? false) {
       status = 'ERROR'
