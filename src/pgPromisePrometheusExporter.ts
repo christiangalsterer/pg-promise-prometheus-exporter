@@ -31,7 +31,7 @@ export class PgPromisePrometheusExporter {
     transact: { func: ((eventCtx: IEventContext) => void) } | undefined
   }
 
-  constructor (db: IDatabase<unknown>, pgPromiseInitOptions: IInitOptions, register: Registry, options?: PgPromiseExporterOptions) {
+  constructor(db: IDatabase<unknown>, pgPromiseInitOptions: IInitOptions, register: Registry, options?: PgPromiseExporterOptions) {
     this.db = db
     this.pgPromiseInitOptions = pgPromiseInitOptions
     this.register = register
@@ -67,8 +67,9 @@ export class PgPromisePrometheusExporter {
     })
   }
 
-  public enableMetrics (): void {
+  public enableMetrics(): void {
     const pgPoolExporterOptions: PgPoolExporterOptions = { defaultLabels: this.options.defaultLabels }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     monitorPgPool(this.db.$pool, this.register, pgPoolExporterOptions)
 
     this.originalHandlers.receive = {
@@ -115,7 +116,7 @@ export class PgPromisePrometheusExporter {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-invalid-void-type
-  onReceive (event: { data: any[], result: void | IResultExt, ctx: IEventContext }): void {
+  onReceive(event: { data: any[], result: void | IResultExt, ctx: IEventContext }): void {
     try {
       if (event.result !== undefined) {
         this.commands.observe(mergeLabelsWithStandardLabels({ host: event.ctx.client.host + ':' + event.ctx.client.port, database: event.ctx.client.database, command: event.result.command, status: this.getStatus(event.ctx.ctx.success) }, this.options.defaultLabels), event.result.duration! / 1000)
@@ -126,7 +127,7 @@ export class PgPromisePrometheusExporter {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onTask (eventCtx: IEventContext): void {
+  onTask(eventCtx: IEventContext): void {
     try {
       if (eventCtx.ctx.finish != null) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -138,7 +139,7 @@ export class PgPromisePrometheusExporter {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onTransaction (eventCtx: IEventContext): void {
+  onTransaction(eventCtx: IEventContext): void {
     try {
       if (eventCtx.ctx.finish != null) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -149,7 +150,7 @@ export class PgPromisePrometheusExporter {
     }
   }
 
-  private getStatus (success: boolean | undefined): string {
+  private getStatus(success: boolean | undefined): string {
     let status = 'ERROR'
     if (success ?? false) {
       status = 'ERROR'
