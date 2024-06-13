@@ -20,9 +20,7 @@ describe('tests PgPromisePrometheusExporter', () => {
 
   const pgp: IMain = pgPromise(initOptionsWithoutHandlers)
   const db: IDatabase<unknown> = pgp({})
-  const metrics: string[] = [
-    'pg_command_duration_seconds', 'pg_task_duration_seconds', 'pg_transaction_duration_seconds'
-  ]
+  const metrics: string[] = ['pg_command_duration_seconds', 'pg_task_duration_seconds', 'pg_transaction_duration_seconds']
 
   beforeEach(() => {
     register = new Registry()
@@ -32,7 +30,7 @@ describe('tests PgPromisePrometheusExporter', () => {
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
-    metrics.forEach(metric => {
+    metrics.forEach((metric) => {
       expect(register.getSingleMetric(metric)).toBeDefined()
     })
   })
@@ -42,7 +40,7 @@ describe('tests PgPromisePrometheusExporter', () => {
     // eslint-disable-next-line no-new
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register, options)
     expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
-    metrics.forEach(metric => {
+    metrics.forEach((metric) => {
       expect(register.getSingleMetric(metric)).toBeDefined()
     })
   })
