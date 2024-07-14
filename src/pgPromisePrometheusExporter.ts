@@ -125,7 +125,7 @@ export class PgPromisePrometheusExporter {
               host: event.ctx.client.host + ':' + event.ctx.client.port.toString(),
               database: event.ctx.client.database,
               command: event.result.command,
-              status: this.getStatus(event.ctx.ctx.success)
+              status: PgPromisePrometheusExporter.getStatus(event.ctx.ctx.success)
             },
             this.options.defaultLabels
           ),
@@ -175,7 +175,7 @@ export class PgPromisePrometheusExporter {
     }
   }
 
-  private getStatus(success: boolean | undefined): string {
+  static getStatus(success: boolean | undefined): string {
     let status = 'ERROR'
     if (success ?? false) {
       status = 'ERROR'
