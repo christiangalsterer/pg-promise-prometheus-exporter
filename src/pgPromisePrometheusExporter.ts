@@ -148,14 +148,14 @@ export class PgPromisePrometheusExporter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onTask(eventCtx: IEventContext): void {
     try {
-      if (eventCtx.ctx.finish != null) {
+      if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
         /* eslint-disable @typescript-eslint/no-unsafe-assignment */
         this.tasks.observe(
           mergeLabelsWithStandardLabels(
             { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, task: eventCtx.ctx.tag },
             this.options.defaultLabels
           ),
-          eventCtx.ctx.duration! / 1000
+          eventCtx.ctx.duration / 1000
         )
         /* eslint-enable @typescript-eslint/no-unsafe-assignment */
       }
@@ -167,14 +167,14 @@ export class PgPromisePrometheusExporter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onTransaction(eventCtx: IEventContext): void {
     try {
-      if (eventCtx.ctx.finish != null) {
+      if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined)  {
         /* eslint-disable @typescript-eslint/no-unsafe-assignment */
         this.transactions.observe(
           mergeLabelsWithStandardLabels(
             { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, transaction: eventCtx.ctx.tag },
             this.options.defaultLabels
           ),
-          eventCtx.ctx.duration! / 1000
+          eventCtx.ctx.duration / 1000
         )
         /* eslint-enable @typescript-eslint/no-unsafe-assignment */
       }
