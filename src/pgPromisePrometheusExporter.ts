@@ -1,6 +1,6 @@
 import { monitorPgPool } from '@christiangalsterer/node-postgres-prometheus-exporter'
 import { type PgPoolExporterOptions } from '@christiangalsterer/node-postgres-prometheus-exporter/dist/pgPoolExporterOptions'
-import { type IDatabase, type IEventContext, type IInitOptions, type IResultExt,type ITaskContext } from 'pg-promise'
+import { type IDatabase, type IEventContext, type IInitOptions, type IResultExt, type ITaskContext } from 'pg-promise'
 import { Histogram, type Registry } from 'prom-client'
 
 import { type PgPromiseExporterOptions } from './pgPromiseExporterOptions'
@@ -32,11 +32,11 @@ export class PgPromisePrometheusExporter {
   }
 
   static getStatus(ctx: ITaskContext | undefined): string {
-    let status = 'SUCCESS';
+    let status = 'SUCCESS'
     if (ctx !== undefined) {
-     status = ctx.success === false ? 'ERROR' : 'SUCCESS';
+      status = ctx.success === false ? 'ERROR' : 'SUCCESS'
     }
-    return status;
+    return status
   }
 
   constructor(db: IDatabase<unknown>, pgPromiseInitOptions: IInitOptions, register: Registry, options?: PgPromiseExporterOptions) {
@@ -184,5 +184,4 @@ export class PgPromisePrometheusExporter {
       console.error('An error occurred in the transaction event handling', error)
     }
   }
-
 }
