@@ -139,8 +139,6 @@ export class PgPromisePrometheusExporter {
           ),
           event.result.duration! / 1000
         )
-      } else {
-        console.log('No result')
       }
     } catch (error) {
       console.error('An error occurred in the receive event handling', error)
