@@ -126,7 +126,7 @@ export class PgPromisePrometheusExporter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-invalid-void-type
   onReceive(event: { data: any[]; result: void | IResultExt; ctx: IEventContext }): void {
     try {
-      if (event.result !== undefined) {
+      if (event.result?.duration !== undefined) {
         this.commands.observe(
           mergeLabelsWithStandardLabels(
             {
@@ -137,7 +137,7 @@ export class PgPromisePrometheusExporter {
             },
             this.options.defaultLabels
           ),
-          event.result.duration! / 1000
+          event.result.duration / 1000
         )
       }
     } catch (error) {
