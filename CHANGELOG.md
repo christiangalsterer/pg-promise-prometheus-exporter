@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v2.1.0...v2.1.1) (2024-07-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @christiangalsterer/node-postgres-prometheus-exporter to v1.2.0 ([3b0005a](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/3b0005a15a238fa232cd7dced55956cad5b27524))
+* **deps:** update dependency @christiangalsterer/node-postgres-prometheus-exporter to v1.2.0 ([e2edb7d](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/e2edb7dcc3284807d315c6fe78ae3398a320c0d3))
+* handle receive event correctly when query is not executed inside task or transaction ([1f4fe9d](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/1f4fe9d5dbc448aaab4ee6177bba887361066ce5))
+* handle receive event correctly when query is not executed inside task or transaction ([db8fe5d](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/db8fe5d9bae15e3cf2452daea51092a88238cda2))
+* handle receive event correctly when query is not executed inside task or transaction ([d4c62a5](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/d4c62a5a848d6615bd35601985ce97191a19878d))
+
 ## [2.1.0](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v2.0.0...v2.1.0) (2024-04-17)
 
 
