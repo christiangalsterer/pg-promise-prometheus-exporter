@@ -167,7 +167,7 @@ export class PgPromisePrometheusExporter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onTransaction(eventCtx: IEventContext): void {
     try {
-      if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined)  {
+      if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
         /* eslint-disable @typescript-eslint/no-unsafe-assignment */
         this.transactions.observe(
           mergeLabelsWithStandardLabels(
