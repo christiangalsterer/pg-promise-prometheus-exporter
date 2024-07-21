@@ -20,6 +20,9 @@ export class PgPromisePrometheusExporter {
     transactionsSecondsHistogramBuckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10]
   }
 
+  private readonly PG_COMMAND_DURATION_SECONDS = 'pg_command_duration_seconds'
+  private readonly PG_TASK_DURATION_SECONDS = 'pg_task_duration_seconds'
+  private readonly PG_TRANSACTION_DURATION_SECONDS = 'pg_transaction_duration_seconds'
   private readonly commands: Histogram
   private readonly tasks: Histogram
   private readonly transactions: Histogram
@@ -49,30 +52,32 @@ export class PgPromisePrometheusExporter {
       task: undefined,
       transact: undefined
     }
+    this.commands = (this.register.getSingleMetric(this.PG_COMMAND_DURATION_SECONDS) ??
+      new Histogram({
+        name: this.PG_COMMAND_DURATION_SECONDS,
+        help: 'Timer of pg commands',
+        buckets: this.options.commandsSecondsHistogramBuckets,
+        labelNames: mergeLabelNamesWithStandardLabels(['host', 'database', 'command', 'status'], this.options.defaultLabels),
+        registers: [this.register]
+      })) as Histogram
 
-    this.commands = new Histogram({
-      name: 'pg_command_duration_seconds',
-      help: 'Timer of pg commands',
-      buckets: this.options.commandsSecondsHistogramBuckets,
-      labelNames: mergeLabelNamesWithStandardLabels(['host', 'database', 'command', 'status'], this.options.defaultLabels),
-      registers: [this.register]
-    })
+    this.tasks = (this.register.getSingleMetric(this.PG_TASK_DURATION_SECONDS) ??
+      new Histogram({
+        name: this.PG_TASK_DURATION_SECONDS,
+        help: 'Timer of pg tasks',
+        buckets: this.options.commandsSecondsHistogramBuckets,
+        labelNames: mergeLabelNamesWithStandardLabels(['host', 'database', 'task', 'status'], this.options.defaultLabels),
+        registers: [this.register]
+      })) as Histogram
 
-    this.tasks = new Histogram({
-      name: 'pg_task_duration_seconds',
-      help: 'Timer of pg tasks',
-      buckets: this.options.commandsSecondsHistogramBuckets,
-      labelNames: mergeLabelNamesWithStandardLabels(['host', 'database', 'task', 'status'], this.options.defaultLabels),
-      registers: [this.register]
-    })
-
-    this.transactions = new Histogram({
-      name: 'pg_transaction_duration_seconds',
-      help: 'Timer of pg transactions',
-      buckets: this.options.commandsSecondsHistogramBuckets,
-      labelNames: mergeLabelNamesWithStandardLabels(['host', 'database', 'transaction', 'status'], this.options.defaultLabels),
-      registers: [this.register]
-    })
+    this.transactions = (this.register.getSingleMetric(this.PG_TRANSACTION_DURATION_SECONDS) ??
+      new Histogram({
+        name: this.PG_TRANSACTION_DURATION_SECONDS,
+        help: 'Timer of pg transactions',
+        buckets: this.options.commandsSecondsHistogramBuckets,
+        labelNames: mergeLabelNamesWithStandardLabels(['host', 'database', 'transaction', 'status'], this.options.defaultLabels),
+        registers: [this.register]
+      })) as Histogram
   }
 
   public enableMetrics(): void {

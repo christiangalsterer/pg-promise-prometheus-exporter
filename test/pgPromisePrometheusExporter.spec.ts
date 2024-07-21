@@ -45,6 +45,17 @@ describe('tests PgPromisePrometheusExporter', () => {
     })
   })
 
+  test('metrics are registered only once and taken from the registry', () => {
+    // eslint-disable-next-line no-new
+    new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
+    // eslint-disable-next-line no-new
+    new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
+    expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
+    metrics.forEach((metric) => {
+      expect(register.getSingleMetric(metric)).toBeDefined()
+    })
+  })
+
   test('event handlers are registered without previous handlers', () => {
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     exporter.enableMetrics()
