@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v2.1.1...v2.2.0) (2024-07-21)
+
+
+### Features
+
+* add support to monitor multiple instances of pg-promise and underlying pg-client and pg-pool instances ([13b4008](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/13b4008bec9e29f3e61f0ceab54049710ba88a6b))
+
+
+### Bug Fixes
+
+* check if duration is available in receive event ([717c1cb](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/717c1cb35c22ee71f6a1b4c1e274ee9bcd54d382))
+* check if duration is available in receive event ([deee1bf](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/deee1bf136b55b5b87f375ee43afa6fc887636ff))
+* check if duration is available in receive event ([d92b5d3](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/d92b5d3b2f674da38b8ac8851481a0242049d3a8))
+
 ## [2.1.1](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v2.1.0...v2.1.1) (2024-07-17)
 
 
