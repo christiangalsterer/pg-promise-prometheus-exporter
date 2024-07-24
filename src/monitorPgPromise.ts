@@ -1,8 +1,8 @@
 import type pgPromise from 'pg-promise'
-import { type IDatabase } from 'pg-promise'
-import { type Registry } from 'prom-client'
+import type { IDatabase } from 'pg-promise'
+import type { Registry } from 'prom-client'
 
-import { type PgPromiseExporterOptions } from './pgPromiseExporterOptions'
+import type { PgPromiseExporterOptions } from './pgPromiseExporterOptions'
 import { PgPromisePrometheusExporter } from './pgPromisePrometheusExporter'
 
 /**
