@@ -3,7 +3,7 @@ import tseslint from 'typescript-eslint'
 import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort'
 import jest from 'eslint-plugin-jest'
 
-export default tseslint.config (
+export default tseslint.config(
   love,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
@@ -17,7 +17,7 @@ export default tseslint.config (
       }
     },
     linterOptions: {
-      reportUnusedDisableDirectives: "error"
+      reportUnusedDisableDirectives: 'error'
     }
   },
   {
@@ -36,7 +36,7 @@ export default tseslint.config (
       'simple-import-sort/exports': 'error'
     }
   },
-  
+
   {
     ignores: ['dist/**/*.*', '**/*.js', '**/*.mjs']
   },
