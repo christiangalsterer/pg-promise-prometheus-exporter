@@ -149,7 +149,6 @@ export class PgPromisePrometheusExporter {
     }
   }
 
-   
   onTask(eventCtx: IEventContext): void {
     try {
       if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
@@ -168,7 +167,6 @@ export class PgPromisePrometheusExporter {
     }
   }
 
-   
   onTransaction(eventCtx: IEventContext): void {
     try {
       if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
