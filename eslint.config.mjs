@@ -8,6 +8,7 @@ export default tseslint.config (
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
   {
+    name: 'base',
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -15,6 +16,9 @@ export default tseslint.config (
         sourceType: 'module',
         projectService: true
       }
+    },
+    linterOptions: {
+      reportUnusedDisableDirectives: "error"
     }
   },
   {
@@ -38,7 +42,9 @@ export default tseslint.config (
     ignores: ['dist/**/*.*', '**/*.js', '**/*.mjs']
   },
   {
+    name: 'src',
     files: ['src/**/*.ts'],
+    ignores: ['test/**/*.ts'],
     languageOptions: {
       parserOptions: {
         projectService: ['tsconfig.json'],
@@ -46,6 +52,7 @@ export default tseslint.config (
     }
   },
   {
+    name: 'test',
     files: ['test/**/*.ts'],
     ...jest.configs['flat/recommended'],
     ...jest.configs['flat/style'],

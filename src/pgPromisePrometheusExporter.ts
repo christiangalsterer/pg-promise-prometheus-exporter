@@ -82,7 +82,6 @@ export class PgPromisePrometheusExporter {
 
   public enableMetrics(): void {
     const pgPoolExporterOptions: PgPoolExporterOptions = { defaultLabels: this.options.defaultLabels }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     monitorPgPool(this.db.$pool, this.register, pgPoolExporterOptions)
 
     this.originalHandlers.receive = {
@@ -150,7 +149,7 @@ export class PgPromisePrometheusExporter {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   onTask(eventCtx: IEventContext): void {
     try {
       if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
@@ -169,7 +168,7 @@ export class PgPromisePrometheusExporter {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   onTransaction(eventCtx: IEventContext): void {
     try {
       if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
