@@ -3,10 +3,20 @@ import tseslint from 'typescript-eslint'
 import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort'
 import jest from 'eslint-plugin-jest'
 
-export default [
+export default tseslint.config (
   love,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
+  {
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        projectService: true
+      }
+    }
+  },
   {
     plugins: {
       jest,
@@ -21,15 +31,9 @@ export default [
       'import/no-duplicates': 'error',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error'
-    },
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module'
-      }
     }
   },
+  
   {
     ignores: ['dist/**/*.*', '**/*.js', '**/*.mjs']
   },
@@ -37,7 +41,7 @@ export default [
     files: ['src/**/*.ts'],
     languageOptions: {
       parserOptions: {
-        project: ['tsconfig.json']
+        projectService: ['tsconfig.json'],
       }
     }
   },
@@ -47,7 +51,7 @@ export default [
     ...jest.configs['flat/style'],
     languageOptions: {
       parserOptions: {
-        project: ['tsconfig.test.json']
+        projectService: ['tsconfig.test.json']
       }
     },
     rules: {
@@ -62,4 +66,4 @@ export default [
       'jest/unbound-method': 'error'
     }
   }
-]
+)
