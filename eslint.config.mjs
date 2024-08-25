@@ -13,8 +13,7 @@ export default tseslint.config (
       parser: tseslint.parser,
       parserOptions: {
         ecmaVersion: 'latest',
-        sourceType: 'module',
-        projectService: true
+        sourceType: 'module'
       }
     },
     linterOptions: {
@@ -44,23 +43,13 @@ export default tseslint.config (
   {
     name: 'src',
     files: ['src/**/*.ts'],
-    ignores: ['test/**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: ['tsconfig.json'],
-      }
-    }
+    ignores: ['test/**/*.ts']
   },
   {
     name: 'test',
     files: ['test/**/*.ts'],
     ...jest.configs['flat/recommended'],
     ...jest.configs['flat/style'],
-    languageOptions: {
-      parserOptions: {
-        projectService: ['tsconfig.test.json']
-      }
-    },
     rules: {
       // you should turn the original rule off *only* for test files
       '@typescript-eslint/unbound-method': 'off',
