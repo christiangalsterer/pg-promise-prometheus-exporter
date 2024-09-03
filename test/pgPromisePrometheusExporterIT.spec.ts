@@ -100,7 +100,6 @@ describe('it for pgPromisePrometheusExporter', () => {
     })
     pgTransactionDurationSecondsMetric = await register.getSingleMetric('pg_transaction_duration_seconds')?.get()
     expect(getValueByName('pg_transaction_duration_seconds_count', pgTransactionDurationSecondsMetric?.values)?.value).toEqual(2)
-
     expect(getValueByName('pg_transaction_duration_seconds_sum', pgTransactionDurationSecondsMetric?.values)?.value).toBeGreaterThanOrEqual(0)
   })
 })
