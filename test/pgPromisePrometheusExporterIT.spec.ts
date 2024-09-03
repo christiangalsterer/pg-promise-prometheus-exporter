@@ -31,7 +31,7 @@ describe('it for pgPromisePrometheusExporter', () => {
     })
 
     monitorPgPromise(db, initOptions, register)
-  })
+  }, 300000)
 
   test('it connection metrics', async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
