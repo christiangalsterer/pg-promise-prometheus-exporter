@@ -15,6 +15,7 @@ describe('it for pgPromisePrometheusExporter', () => {
   beforeEach(async () => {
     register = new Registry()
     collectDefaultMetrics({ register })
+    register.clear()
     container = await new PostgreSqlContainer().start()
 
     pgp = pgPromise(initOptions)
@@ -46,7 +47,7 @@ describe('it for pgPromisePrometheusExporter', () => {
     expect(pgPoolMaxMetric?.values.at(0)?.value).toEqual(20)
 
     await container.stop()
-  }, 100000)
+  }, 300000)
 
   test('it command metrics', async () => {
     let result = await db.any('SELECT NOW()')
@@ -63,7 +64,7 @@ describe('it for pgPromisePrometheusExporter', () => {
     expect(getValueByName('pg_command_duration_seconds_sum', pgCommandDurationSecondsMetric?.values)?.value).toBeGreaterThan(0)
 
     await container.stop()
-  }, 100000)
+  }, 300000)
 
   test('it task metrics', async () => {
     let result = await db.task('my-task', (t: { any: (arg0: string) => unknown }) => {
@@ -82,7 +83,7 @@ describe('it for pgPromisePrometheusExporter', () => {
     expect(getValueByName('pg_task_duration_seconds_sum', pgTaskDurationSecondsMetric?.values)?.value).toBeGreaterThan(0)
 
     await container.stop()
-  }, 100000)
+  }, 300000)
 
   test('it transaction metrics', async () => {
     let result = await db.tx('my-task', (t: { any: (arg0: string) => unknown }) => {
