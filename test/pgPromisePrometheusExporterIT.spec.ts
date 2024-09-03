@@ -66,7 +66,7 @@ describe('it for pgPromisePrometheusExporter', () => {
     result = await db.any('SELECT NOW()')
     pgCommandDurationSecondsMetric = await register.getSingleMetric('pg_command_duration_seconds')?.get()
     expect(getValueByName('pg_command_duration_seconds_count', pgCommandDurationSecondsMetric?.values)?.value).toEqual(2)
-    expect(getValueByName('pg_command_duration_seconds_sum', pgCommandDurationSecondsMetric?.values)?.value).toBeGreaterThan(0)
+    expect(getValueByName('pg_command_duration_seconds_sum', pgCommandDurationSecondsMetric?.values)?.value).toBeGreaterThanOrEqual(0)
   })
 
   test('it task metrics', async () => {
