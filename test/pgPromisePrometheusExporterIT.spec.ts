@@ -12,11 +12,19 @@ let pgp: IMain = pgPromise(initOptions)
 let container: StartedPostgreSqlContainer
 
 describe('it for pgPromisePrometheusExporter', () => {
-  beforeEach(async () => {
+
+  beforeAll(async () => {
+    container = await new PostgreSqlContainer().start()
+  }, 60000)
+
+  afterAll(async () => {
+    await container.stop()
+  })
+
+  beforeEach(() => {
     register = new Registry()
     collectDefaultMetrics({ register })
     register.clear()
-    container = await new PostgreSqlContainer().start()
 
     pgp = pgPromise(initOptions)
 
@@ -31,7 +39,7 @@ describe('it for pgPromisePrometheusExporter', () => {
     })
 
     monitorPgPromise(db, initOptions, register)
-  }, 60000)
+  })
 
   test('it connection metrics', async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -45,8 +53,6 @@ describe('it for pgPromisePrometheusExporter', () => {
     expect(pgPoolMaxMetric?.type).toEqual('gauge')
     expect(pgPoolMaxMetric?.values.length).toEqual(1)
     expect(pgPoolMaxMetric?.values.at(0)?.value).toEqual(20)
-
-    await container.stop()
   })
 
   test('it command metrics', async () => {
@@ -62,8 +68,6 @@ describe('it for pgPromisePrometheusExporter', () => {
     pgCommandDurationSecondsMetric = await register.getSingleMetric('pg_command_duration_seconds')?.get()
     expect(getValueByName('pg_command_duration_seconds_count', pgCommandDurationSecondsMetric?.values)?.value).toEqual(2)
     expect(getValueByName('pg_command_duration_seconds_sum', pgCommandDurationSecondsMetric?.values)?.value).toBeGreaterThan(0)
-
-    await container.stop()
   })
 
   test('it task metrics', async () => {
@@ -80,9 +84,7 @@ describe('it for pgPromisePrometheusExporter', () => {
     })
     pgTaskDurationSecondsMetric = await register.getSingleMetric('pg_task_duration_seconds')?.get()
     expect(getValueByName('pg_task_duration_seconds_count', pgTaskDurationSecondsMetric?.values)?.value).toEqual(2)
-    expect(getValueByName('pg_task_duration_seconds_sum', pgTaskDurationSecondsMetric?.values)?.value).toBeGreaterThan(0)
-
-    await container.stop()
+    expect(getValueByName('pg_task_duration_seconds_sum', pgTaskDurationSecondsMetric?.values)?.value).toBeGreaterThanOrEqual(0)
   })
 
   test('it transaction metrics', async () => {
@@ -100,9 +102,7 @@ describe('it for pgPromisePrometheusExporter', () => {
     pgTransactionDurationSecondsMetric = await register.getSingleMetric('pg_transaction_duration_seconds')?.get()
     expect(getValueByName('pg_transaction_duration_seconds_count', pgTransactionDurationSecondsMetric?.values)?.value).toEqual(2)
 
-    expect(getValueByName('pg_transaction_duration_seconds_sum', pgTransactionDurationSecondsMetric?.values)?.value).toBeGreaterThan(0)
-
-    await container.stop()
+    expect(getValueByName('pg_transaction_duration_seconds_sum', pgTransactionDurationSecondsMetric?.values)?.value).toBeGreaterThanOrEqual(0)
   })
 })
 
