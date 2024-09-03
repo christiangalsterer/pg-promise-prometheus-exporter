@@ -12,7 +12,6 @@ let pgp: IMain = pgPromise(initOptions)
 let container: StartedPostgreSqlContainer
 
 describe('it for pgPromisePrometheusExporter', () => {
-
   beforeAll(async () => {
     container = await new PostgreSqlContainer().start()
   }, 60000)
