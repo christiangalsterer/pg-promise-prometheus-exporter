@@ -6,6 +6,8 @@ import { Histogram, type Registry } from 'prom-client'
 import type { PgPromiseExporterOptions } from './pgPromiseExporterOptions'
 import { mergeLabelNamesWithStandardLabels, mergeLabelsWithStandardLabels } from './utils'
 
+const MILLISECONDS_IN_A_SECOND = 1000
+
 /**
  * Exports metrics for pg-promise
  */
@@ -15,8 +17,11 @@ export class PgPromisePrometheusExporter {
   private readonly register: Registry
   private readonly options: PgPromiseExporterOptions
   private readonly defaultOptions: PgPromiseExporterOptions = {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     commandsSecondsHistogramBuckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     tasksSecondsHistogramBuckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     transactionsSecondsHistogramBuckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10]
   }
 
@@ -141,7 +146,7 @@ export class PgPromisePrometheusExporter {
             },
             this.options.defaultLabels
           ),
-          event.result.duration / 1000
+          event.result.duration / MILLISECONDS_IN_A_SECOND
         )
       }
     } catch (error) {
@@ -158,7 +163,7 @@ export class PgPromisePrometheusExporter {
             { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, task: eventCtx.ctx.tag },
             this.options.defaultLabels
           ),
-          eventCtx.ctx.duration / 1000
+          eventCtx.ctx.duration / MILLISECONDS_IN_A_SECOND
         )
         /* eslint-enable @typescript-eslint/no-unsafe-assignment */
       }
@@ -176,7 +181,7 @@ export class PgPromisePrometheusExporter {
             { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, transaction: eventCtx.ctx.tag },
             this.options.defaultLabels
           ),
-          eventCtx.ctx.duration / 1000
+          eventCtx.ctx.duration / MILLISECONDS_IN_A_SECOND
         )
         /* eslint-enable @typescript-eslint/no-unsafe-assignment */
       }
