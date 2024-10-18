@@ -35,6 +35,7 @@ describe('tests monitorPgPromise', () => {
 
   test('monitorPgPromise calls enableMetrics of PgPromisePrometheusExporter instance', () => {
     monitorPgPromise(db, initOptions, register)
+    // eslint-disable-next-line @typescript-eslint/prefer-destructuring
     const mockPgPoolPrometheusExporterInstance = mockPromisePrometheusExporter.mock.instances[0]
     // eslint-disable-next-line jest/unbound-method
     const monitorEnableMetrics = mockPgPoolPrometheusExporterInstance.enableMetrics as jest.Mock
