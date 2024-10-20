@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v2.2.0...v2.2.1) (2024-10-20)
+
+
+### Bug Fixes
+
+* wrong entrypoint after migration to single tsconfig file ([d03d643](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/commit/d03d64396b4cfffee3abc9a0db3f3fb02705c07e))
+
 ## [2.2.0](https://github.com/christiangalsterer/pg-promise-prometheus-exporter/compare/v2.1.1...v2.2.0) (2024-07-21)
 
 
