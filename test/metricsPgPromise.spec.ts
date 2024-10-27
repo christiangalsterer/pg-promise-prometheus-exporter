@@ -7,9 +7,9 @@ import { PgPromisePrometheusExporter } from '../src/pgPromisePrometheusExporter'
 
 jest.mock('prom-client', () => ({
   Histogram: jest.fn(() => ({
-      set: jest.fn(),
-      get: jest.fn()
-    }))
+    set: jest.fn(),
+    get: jest.fn()
+  }))
 }))
 
 describe('all metrics are created with the correct parameters', () => {
