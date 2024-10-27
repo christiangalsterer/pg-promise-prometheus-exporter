@@ -87,17 +87,13 @@ describe('it for pgPromisePrometheusExporter', () => {
   })
 
   test('it task metrics', async () => {
-    let result = await db.task('my-task', (t: { any: (arg0: string) => unknown }) => {
-      return t.any('SELECT NOW()')
-    })
+    let result = await db.task('my-task', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
     let pgTaskDurationSecondsMetric = await register.getSingleMetric('pg_task_duration_seconds')?.get()
     expect(pgTaskDurationSecondsMetric?.type).toEqual('histogram')
     expect(getValueByName('pg_task_duration_seconds_count', pgTaskDurationSecondsMetric?.values)?.value).toEqual(1)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    result = await db.task('my-task', (t: { any: (arg0: string) => unknown }) => {
-      return t.any('SELECT NOW()')
-    })
+    result = await db.task('my-task', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
     pgTaskDurationSecondsMetric = await register.getSingleMetric('pg_task_duration_seconds')?.get()
     expect(getValueByName('pg_task_duration_seconds_count', pgTaskDurationSecondsMetric?.values)?.value).toEqual(2)
     expect(getValueByName('pg_task_duration_seconds_sum', pgTaskDurationSecondsMetric?.values)?.value).toBeGreaterThanOrEqual(0)
@@ -106,9 +102,7 @@ describe('it for pgPromisePrometheusExporter', () => {
   test.each(taskMetrics)('it task metric "%s" is emitted with default labels', async (metricName) => {
     const expectedLabels = { foo: 'bar', alice: 2 }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const result = await db.task('my-task', (t: { any: (arg0: string) => unknown }) => {
-      return t.any('SELECT NOW()')
-    })
+    const result = await db.task('my-task', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
 
     const metric = await register.getSingleMetric('pg_task_duration_seconds')?.get()
     expect(metric).toBeDefined()
@@ -120,17 +114,13 @@ describe('it for pgPromisePrometheusExporter', () => {
   })
 
   test('it transaction metrics', async () => {
-    let result = await db.tx('my-tx', (t: { any: (arg0: string) => unknown }) => {
-      return t.any('SELECT NOW()')
-    })
+    let result = await db.tx('my-tx', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
     let pgTransactionDurationSecondsMetric = await register.getSingleMetric('pg_transaction_duration_seconds')?.get()
     expect(pgTransactionDurationSecondsMetric?.type).toEqual('histogram')
     expect(getValueByName('pg_transaction_duration_seconds_count', pgTransactionDurationSecondsMetric?.values)?.value).toEqual(1)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    result = await db.tx('my-tx', (t: { any: (arg0: string) => unknown }) => {
-      return t.any('SELECT NOW()')
-    })
+    result = await db.tx('my-tx', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
     pgTransactionDurationSecondsMetric = await register.getSingleMetric('pg_transaction_duration_seconds')?.get()
     expect(getValueByName('pg_transaction_duration_seconds_count', pgTransactionDurationSecondsMetric?.values)?.value).toEqual(2)
     expect(getValueByName('pg_transaction_duration_seconds_sum', pgTransactionDurationSecondsMetric?.values)?.value).toBeGreaterThanOrEqual(0)
@@ -139,9 +129,7 @@ describe('it for pgPromisePrometheusExporter', () => {
   test.each(transactionMetrics)('it transaction metric "%s" is emitted with default labels', async (metricName) => {
     const expectedLabels = { foo: 'bar', alice: 2 }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const result = await db.tx('my-tx', (t: { any: (arg0: string) => unknown }) => {
-      return t.any('SELECT NOW()')
-    })
+    const result = await db.tx('my-tx', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
 
     const metric = await register.getSingleMetric('pg_transaction_duration_seconds')?.get()
     expect(metric).toBeDefined()
