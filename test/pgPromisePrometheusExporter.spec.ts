@@ -87,6 +87,7 @@ describe('tests PgPromisePrometheusExporter', () => {
   })
 
   test('monitorPgPool is called', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
     const monitorPgPoolMock = monitorPgPool as jest.Mock
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register)
     exporter.enableMetrics()
@@ -94,6 +95,7 @@ describe('tests PgPromisePrometheusExporter', () => {
   })
 
   test('monitorPgPool is called with default labels', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
     const monitorPgPoolMock = monitorPgPool as jest.Mock
     const options = { defaultLabels: { foo: 'bar', alice: 2 } }
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register, options)
