@@ -71,7 +71,7 @@ export class PgPromisePrometheusExporter {
           })
 
     const tasksMetric = this.register.getSingleMetric(this.PG_TASK_DURATION_SECONDS)
-    this.commands =
+    this.tasks =
       tasksMetric instanceof Histogram
         ? tasksMetric
         : new Histogram({
