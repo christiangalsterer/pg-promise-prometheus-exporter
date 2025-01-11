@@ -13,9 +13,9 @@ describe('tests PgPromisePrometheusExporter', () => {
   let register: Registry
   const initOptionsWithoutHandlers: IInitOptions = {}
   const initOptionsWithHandlers: IInitOptions = {
-    receive: console.log,
-    task: console.log,
-    transact: console.log
+    receive: jest.fn(),
+    task: jest.fn(),
+    transact: jest.fn()
   }
 
   const pgp: IMain = pgPromise(initOptionsWithoutHandlers)
