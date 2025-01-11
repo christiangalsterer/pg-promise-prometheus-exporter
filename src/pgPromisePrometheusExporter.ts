@@ -144,59 +144,47 @@ export class PgPromisePrometheusExporter {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-invalid-void-type
   onReceive(event: { data: any[]; result: void | IResultExt; ctx: IEventContext }): void {
-    try {
-      if (event.result?.duration !== undefined) {
-        this.commands.observe(
-          mergeLabelsWithStandardLabels(
-            {
-              host: event.ctx.client.host + ':' + event.ctx.client.port.toString(),
-              database: event.ctx.client.database,
-              command: event.result.command,
-              status: PgPromisePrometheusExporter.getStatus(event.ctx.ctx)
-            },
-            this.options.defaultLabels
-          ),
-          event.result.duration / MILLISECONDS_IN_A_SECOND
-        )
-      }
-    } catch (error) {
-      console.error('An error occurred in the receive event handling', error)
+    if (event.result?.duration !== undefined) {
+      this.commands.observe(
+        mergeLabelsWithStandardLabels(
+          {
+            host: event.ctx.client.host + ':' + event.ctx.client.port.toString(),
+            database: event.ctx.client.database,
+            command: event.result.command,
+            status: PgPromisePrometheusExporter.getStatus(event.ctx.ctx)
+          },
+          this.options.defaultLabels
+        ),
+        event.result.duration / MILLISECONDS_IN_A_SECOND
+      )
     }
   }
 
   onTask(eventCtx: IEventContext): void {
-    try {
-      if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
-        /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-        this.tasks.observe(
-          mergeLabelsWithStandardLabels(
-            { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, task: eventCtx.ctx.tag },
-            this.options.defaultLabels
-          ),
-          eventCtx.ctx.duration / MILLISECONDS_IN_A_SECOND
-        )
-        /* eslint-enable @typescript-eslint/no-unsafe-assignment */
-      }
-    } catch (error) {
-      console.error('An error occurred in the task event handling', error)
+    if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
+      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+      this.tasks.observe(
+        mergeLabelsWithStandardLabels(
+          { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, task: eventCtx.ctx.tag },
+          this.options.defaultLabels
+        ),
+        eventCtx.ctx.duration / MILLISECONDS_IN_A_SECOND
+      )
+      /* eslint-enable @typescript-eslint/no-unsafe-assignment */
     }
   }
 
   onTransaction(eventCtx: IEventContext): void {
-    try {
-      if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
-        /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-        this.transactions.observe(
-          mergeLabelsWithStandardLabels(
-            { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, transaction: eventCtx.ctx.tag },
-            this.options.defaultLabels
-          ),
-          eventCtx.ctx.duration / MILLISECONDS_IN_A_SECOND
-        )
-        /* eslint-enable @typescript-eslint/no-unsafe-assignment */
-      }
-    } catch (error) {
-      console.error('An error occurred in the transaction event handling', error)
+    if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
+      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+      this.transactions.observe(
+        mergeLabelsWithStandardLabels(
+          { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, transaction: eventCtx.ctx.tag },
+          this.options.defaultLabels
+        ),
+        eventCtx.ctx.duration / MILLISECONDS_IN_A_SECOND
+      )
+      /* eslint-enable @typescript-eslint/no-unsafe-assignment */
     }
   }
 }
