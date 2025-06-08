@@ -16,7 +16,7 @@ let container: StartedPostgreSqlContainer
 
 describe('it for pgPromisePrometheusExporter', () => {
   beforeAll(async () => {
-    container = await new PostgreSqlContainer().start()
+    container = await new PostgreSqlContainer('postgres:latest').start()
   }, 60000)
 
   afterAll(async () => {
