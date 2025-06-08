@@ -8,15 +8,15 @@ const initOptions: IInitOptions = {}
 const commandMetrics = ['pg_command_duration_seconds_bucket', 'pg_command_duration_seconds_sum', 'pg_command_duration_seconds_count']
 const taskMetrics = ['pg_task_duration_seconds_bucket', 'pg_task_duration_seconds_sum', 'pg_task_duration_seconds_count']
 const transactionMetrics = ['pg_transaction_duration_seconds_bucket', 'pg_transaction_duration_seconds_sum', 'pg_transaction_duration_seconds_count']
-
+const postgresVersions = ['13', '14', '15', '16', '17']
 let register: Registry
 let db: IDatabase<unknown>
 let pgp: IMain = pgPromise(initOptions)
 let container: StartedPostgreSqlContainer
 
-describe('it for pgPromisePrometheusExporter', () => {
+describe.each(postgresVersions)('it for pgPromisePrometheusExporter on PostgreSQL %s', (postgresVersion) => {
   beforeAll(async () => {
-    container = await new PostgreSqlContainer('postgres:latest').start()
+    container = await new PostgreSqlContainer(`postgres:${postgresVersion}`).start()
   }, 60000)
 
   afterAll(async () => {
