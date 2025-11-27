@@ -1,5 +1,5 @@
+import type { PgPoolExporterOptions } from '@christiangalsterer/node-postgres-prometheus-exporter'
 import { monitorPgPool } from '@christiangalsterer/node-postgres-prometheus-exporter'
-import type { PgPoolExporterOptions } from '@christiangalsterer/node-postgres-prometheus-exporter/dist/pgPoolExporterOptions'
 import type { IDatabase, IEventContext, IInitOptions, IResultExt, ITaskContext } from 'pg-promise'
 import { Histogram, type Registry } from 'prom-client'
 
