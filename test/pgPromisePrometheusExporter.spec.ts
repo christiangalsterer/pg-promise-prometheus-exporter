@@ -13,8 +13,11 @@ describe('tests PgPromisePrometheusExporter', () => {
   let register: Registry
   const initOptionsWithoutHandlers: IInitOptions = {}
   const initOptionsWithHandlers: IInitOptions = {
+    // eslint-disable-next-line @typescript-eslint/strict-void-return -- jest.fn() mock is compatible with void handler type at runtime
     receive: jest.fn(),
+    // eslint-disable-next-line @typescript-eslint/strict-void-return -- jest.fn() mock is compatible with void handler type at runtime
     task: jest.fn(),
+    // eslint-disable-next-line @typescript-eslint/strict-void-return -- jest.fn() mock is compatible with void handler type at runtime
     transact: jest.fn()
   }
 
@@ -27,7 +30,7 @@ describe('tests PgPromisePrometheusExporter', () => {
   })
 
   test('all metrics are registered in registry', () => {
-    // eslint-disable-next-line no-new
+    // eslint-disable-next-line no-new -- constructor call needed for side effects (metric registration) only
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
     metrics.forEach((metric) => {
@@ -37,7 +40,7 @@ describe('tests PgPromisePrometheusExporter', () => {
 
   test('all metrics are registered in registry with defaultLabels', () => {
     const options = { defaultLabels: { foo: 'bar', alice: 2 } }
-    // eslint-disable-next-line no-new
+    // eslint-disable-next-line no-new -- constructor call needed for side effects (metric registration) only
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register, options)
     expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
     metrics.forEach((metric) => {
@@ -46,9 +49,9 @@ describe('tests PgPromisePrometheusExporter', () => {
   })
 
   test('metrics are registered only once and taken from the registry', () => {
-    // eslint-disable-next-line no-new
+    // eslint-disable-next-line no-new -- constructor call needed for side effects (metric registration) only
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
-    // eslint-disable-next-line no-new
+    // eslint-disable-next-line no-new -- constructor call needed for side effects (metric registration) only
     new PgPromisePrometheusExporter(db, initOptionsWithoutHandlers, register)
     expect(register.getMetricsAsArray()).toHaveLength(metrics.length)
     metrics.forEach((metric) => {
@@ -87,7 +90,7 @@ describe('tests PgPromisePrometheusExporter', () => {
   })
 
   test('monitorPgPool is called', () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- casting jest module mock to typed jest.Mock for assertion access
     const monitorPgPoolMock = monitorPgPool as jest.Mock
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register)
     exporter.enableMetrics()
@@ -95,7 +98,7 @@ describe('tests PgPromisePrometheusExporter', () => {
   })
 
   test('monitorPgPool is called with default labels', () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- casting jest module mock to typed jest.Mock for assertion access
     const monitorPgPoolMock = monitorPgPool as jest.Mock
     const options = { defaultLabels: { foo: 'bar', alice: 2 } }
     const exporter = new PgPromisePrometheusExporter(db, initOptionsWithHandlers, register, options)
