@@ -17,11 +17,11 @@ export class PgPromisePrometheusExporter {
   private readonly register: Registry
   private readonly options: PgPromiseExporterOptions
   private readonly defaultOptions: PgPromiseExporterOptions = {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers -- histogram bucket values are self-documenting duration constants
     commandsSecondsHistogramBuckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers -- histogram bucket values are self-documenting duration constants
     tasksSecondsHistogramBuckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10],
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers -- histogram bucket values are self-documenting duration constants
     transactionsSecondsHistogramBuckets: [0.001, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10]
   }
 
@@ -33,7 +33,7 @@ export class PgPromisePrometheusExporter {
   private readonly transactions: Histogram
 
   private readonly originalHandlers: {
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type, @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type, @typescript-eslint/no-explicit-any -- pg-promise event handler signature requires these types from the library
     receive: { func: (event: { data: any[]; result: void | IResultExt; ctx: IEventContext }) => void } | undefined
     task: { func: (eventCtx: IEventContext) => void } | undefined
     transact: { func: (eventCtx: IEventContext) => void } | undefined
@@ -100,7 +100,7 @@ export class PgPromisePrometheusExporter {
     monitorPgPool(this.db.$pool, this.register, pgPoolExporterOptions)
 
     this.originalHandlers.receive = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- binding pg-promise event handler preserves the library's dynamic type
       func: this.pgPromiseInitOptions.receive?.bind(this)
     }
     if (typeof this.pgPromiseInitOptions.receive === 'function') {
@@ -109,12 +109,12 @@ export class PgPromisePrometheusExporter {
         this.originalHandlers.receive?.func(e)
       }
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- binding pg-promise event handler preserves the library's dynamic type
       this.pgPromiseInitOptions.receive = this.onReceive.bind(this)
     }
 
     this.originalHandlers.task = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- binding pg-promise event handler preserves the library's dynamic type
       func: this.pgPromiseInitOptions.task?.bind(this)
     }
     if (typeof this.pgPromiseInitOptions.task === 'function') {
@@ -123,12 +123,12 @@ export class PgPromisePrometheusExporter {
         this.originalHandlers.task?.func(e)
       }
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- binding pg-promise event handler preserves the library's dynamic type
       this.pgPromiseInitOptions.task = this.onTask.bind(this)
     }
 
     this.originalHandlers.transact = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- binding pg-promise event handler preserves the library's dynamic type
       func: this.pgPromiseInitOptions.transact?.bind(this)
     }
     if (typeof this.pgPromiseInitOptions.transact === 'function') {
@@ -137,18 +137,18 @@ export class PgPromisePrometheusExporter {
         this.originalHandlers.transact?.func(e)
       }
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- binding pg-promise event handler preserves the library's dynamic type
       this.pgPromiseInitOptions.transact = this.onTransaction.bind(this)
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-invalid-void-type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-invalid-void-type -- pg-promise event handler signature requires these types from the library
   onReceive(event: { data: any[]; result: void | IResultExt; ctx: IEventContext }): void {
     if (event.result?.duration !== undefined) {
       this.commands.observe(
         mergeLabelsWithStandardLabels(
           {
-            host: event.ctx.client.host + ':' + event.ctx.client.port.toString(),
+            host: `${event.ctx.client.host}:${event.ctx.client.port.toString()}`,
             database: event.ctx.client.database,
             command: event.result.command,
             status: PgPromisePrometheusExporter.getStatus(event.ctx.ctx)
@@ -162,10 +162,10 @@ export class PgPromisePrometheusExporter {
 
   onTask(eventCtx: IEventContext): void {
     if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
-      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+      /* eslint-disable @typescript-eslint/no-unsafe-assignment -- pg-promise task event context uses dynamic types from the library */
       this.tasks.observe(
         mergeLabelsWithStandardLabels(
-          { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, task: eventCtx.ctx.tag },
+          { host: `${eventCtx.client.host}:${eventCtx.client.port.toString()}`, database: eventCtx.client.database, task: eventCtx.ctx.tag },
           this.options.defaultLabels
         ),
         eventCtx.ctx.duration / MILLISECONDS_IN_A_SECOND
@@ -176,10 +176,10 @@ export class PgPromisePrometheusExporter {
 
   onTransaction(eventCtx: IEventContext): void {
     if (eventCtx.ctx.finish != null && eventCtx.ctx.duration !== undefined) {
-      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+      /* eslint-disable @typescript-eslint/no-unsafe-assignment -- pg-promise transaction event context uses dynamic types from the library */
       this.transactions.observe(
         mergeLabelsWithStandardLabels(
-          { host: eventCtx.client.host + ':' + eventCtx.client.port.toString(), database: eventCtx.client.database, transaction: eventCtx.ctx.tag },
+          { host: `${eventCtx.client.host}:${eventCtx.client.port.toString()}`, database: eventCtx.client.database, transaction: eventCtx.ctx.tag },
           this.options.defaultLabels
         ),
         eventCtx.ctx.duration / MILLISECONDS_IN_A_SECOND

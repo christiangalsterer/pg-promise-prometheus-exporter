@@ -44,7 +44,7 @@ describe.each(postgresVersions)('it for pgPromisePrometheusExporter on PostgreSQ
   })
 
   test('it connection metrics', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- result needed to trigger database query but value is not used in assertion
     const result = await db.any('SELECT NOW()')
     const pgPoolConnectionsCreatedTotalMetric = await register.getSingleMetric('pg_pool_connections_created_total')?.get()
     expect(pgPoolConnectionsCreatedTotalMetric?.type).toEqual('counter')
@@ -65,7 +65,7 @@ describe.each(postgresVersions)('it for pgPromisePrometheusExporter on PostgreSQ
     expect(pgCommandDurationSecondsMetric?.values.length).toBe(17)
     expect(getValueByName('pg_command_duration_seconds_count', pgCommandDurationSecondsMetric?.values)?.value).toEqual(1)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- result needed to trigger database query but value is not used in assertion
     result = await db.any('SELECT NOW()')
     pgCommandDurationSecondsMetric = await register.getSingleMetric('pg_command_duration_seconds')?.get()
     expect(getValueByName('pg_command_duration_seconds_count', pgCommandDurationSecondsMetric?.values)?.value).toEqual(2)
@@ -74,7 +74,7 @@ describe.each(postgresVersions)('it for pgPromisePrometheusExporter on PostgreSQ
 
   test.each(commandMetrics)('it command metric "%s" is emitted with default labels', async (metricName) => {
     const expectedLabels = { foo: 'bar', alice: 2 }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- result needed to trigger database query but value is not used in assertion
     const result = await db.any('SELECT NOW()')
 
     const metric = await register.getSingleMetric('pg_command_duration_seconds')?.get()
@@ -92,7 +92,7 @@ describe.each(postgresVersions)('it for pgPromisePrometheusExporter on PostgreSQ
     expect(pgTaskDurationSecondsMetric?.type).toEqual('histogram')
     expect(getValueByName('pg_task_duration_seconds_count', pgTaskDurationSecondsMetric?.values)?.value).toEqual(1)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- result needed to trigger database query but value is not used in assertion
     result = await db.task('my-task', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
     pgTaskDurationSecondsMetric = await register.getSingleMetric('pg_task_duration_seconds')?.get()
     expect(getValueByName('pg_task_duration_seconds_count', pgTaskDurationSecondsMetric?.values)?.value).toEqual(2)
@@ -101,7 +101,7 @@ describe.each(postgresVersions)('it for pgPromisePrometheusExporter on PostgreSQ
 
   test.each(taskMetrics)('it task metric "%s" is emitted with default labels', async (metricName) => {
     const expectedLabels = { foo: 'bar', alice: 2 }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- result needed to trigger database query but value is not used in assertion
     const result = await db.task('my-task', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
 
     const metric = await register.getSingleMetric('pg_task_duration_seconds')?.get()
@@ -119,7 +119,7 @@ describe.each(postgresVersions)('it for pgPromisePrometheusExporter on PostgreSQ
     expect(pgTransactionDurationSecondsMetric?.type).toEqual('histogram')
     expect(getValueByName('pg_transaction_duration_seconds_count', pgTransactionDurationSecondsMetric?.values)?.value).toEqual(1)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- result needed to trigger database query but value is not used in assertion
     result = await db.tx('my-tx', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
     pgTransactionDurationSecondsMetric = await register.getSingleMetric('pg_transaction_duration_seconds')?.get()
     expect(getValueByName('pg_transaction_duration_seconds_count', pgTransactionDurationSecondsMetric?.values)?.value).toEqual(2)
@@ -128,7 +128,7 @@ describe.each(postgresVersions)('it for pgPromisePrometheusExporter on PostgreSQ
 
   test.each(transactionMetrics)('it transaction metric "%s" is emitted with default labels', async (metricName) => {
     const expectedLabels = { foo: 'bar', alice: 2 }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- result needed to trigger database query but value is not used in assertion
     const result = await db.tx('my-tx', (t: { any: (arg0: string) => unknown }) => t.any('SELECT NOW()'))
 
     const metric = await register.getSingleMetric('pg_transaction_duration_seconds')?.get()

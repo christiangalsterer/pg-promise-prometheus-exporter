@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/consistent-type-assertions -- registry mock requires type assertion to satisfy the compiler in test setup */
 import { beforeEach } from '@jest/globals'
 import pgPromise, { type IDatabase, type IInitOptions, type IMain } from 'pg-promise'
 import { Histogram, type Registry } from 'prom-client'
@@ -14,7 +14,7 @@ jest.mock('prom-client', () => ({
 
 describe('all metrics are created with the correct parameters', () => {
   const options = { defaultLabels: { foo: 'bar', alice: 2 } }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- registry mock requires type assertion to satisfy the compiler in test setup
   const register: Registry = {} as Registry
   const initOptions: IInitOptions = {}
   const pgp: IMain = pgPromise(initOptions)
@@ -26,7 +26,7 @@ describe('all metrics are created with the correct parameters', () => {
   })
 
   test('all metrics are created', () => {
-    // eslint-disable-next-line no-new
+    // eslint-disable-next-line no-new -- constructor call needed for side effects (metric registration) only
     new PgPromisePrometheusExporter(db, initOptions, register)
 
     expect(Histogram).toHaveBeenCalledTimes(3)
@@ -57,7 +57,7 @@ describe('all metrics are created with the correct parameters', () => {
   })
 
   test('all metrics are created with default labels', () => {
-    // eslint-disable-next-line no-new
+    // eslint-disable-next-line no-new -- constructor call needed for side effects (metric registration) only
     new PgPromisePrometheusExporter(db, initOptions, register, options)
 
     expect(Histogram).toHaveBeenCalledTimes(3)
