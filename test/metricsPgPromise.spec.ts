@@ -14,7 +14,7 @@ jest.mock('prom-client', () => ({
 
 describe('all metrics are created with the correct parameters', () => {
   const options = { defaultLabels: { foo: 'bar', alice: 2 } }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- registry mock requires type assertion to satisfy the compiler in test setup
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion, @typescript-eslint/no-unsafe-class-instance-assignment -- registry mock requires an empty object assertion
   const register: Registry = {} as Registry
   const initOptions: IInitOptions = {}
   const pgp: IMain = pgPromise(initOptions)
